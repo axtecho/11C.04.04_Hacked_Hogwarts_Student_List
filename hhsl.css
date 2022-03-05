@@ -1,0 +1,498 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: roboto, "Times New Roman", Times, serif;
+}
+/* main {
+    margin: 0 4vw;
+} */
+
+#headerNav {
+  height: 40px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+#headerNav p {
+  grid-column: 1/3;
+}
+.burgericon {
+  align-self: center;
+  grid-column: 3;
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  z-index: 5;
+}
+#menu-btn-svg {
+  width: 40px;
+  height: 40px;
+  justify-self: center;
+  cursor: pointer;
+  z-index: 2;
+}
+.navborder {
+  border: 1px solid rgba(76, 76, 76, 0.5);
+  grid-column: 1/-1;
+  margin: 2vw 0vw;
+}
+.searchbar {
+  width: 100%;
+  height: 30px;
+  margin: 10vw 0;
+  display: flex;
+  justify-content: center;
+  padding: 0 5vw;
+}
+#searchicon {
+  height: 100%;
+}
+.searchicon {
+  height: 30px;
+  width: 40px;
+}
+.searchbar input {
+  width: 100%;
+  padding-left: 1vw;
+}
+.Slide-Out-Menu {
+  width: 100%;
+  height: 100vh;
+  background-color: whitesmoke;
+  z-index: 1;
+  position: fixed;
+  transition-duration: 0.4s;
+  transition-timing-function: ease-out;
+  transform: translate(101vw, 0px);
+  z-index: 4;
+  top: 0;
+  left: 0;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20vw;
+  width: 100%;
+  padding: 0vw 8vw;
+}
+.filterMenuHeader {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+.sortingMenuHeader {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 10vw;
+}
+.filterBorder {
+  border: 0.5px solid rgba(104, 90, 90, 0.5);
+  width: 100%;
+}
+.mainContent {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.filterList {
+  width: 100%;
+}
+.filterList ul {
+  list-style-type: none;
+  margin-top: 6vw;
+}
+.filterList ul li {
+  display: flex;
+  padding-right: 2vw;
+  align-items: center;
+}
+.sortingList {
+  width: 100%;
+}
+.sortingList ul {
+  list-style-type: none;
+  margin-top: 6vw;
+}
+.sortingList ul li {
+  display: flex;
+  padding-right: 2vw;
+  align-items: center;
+}
+.dot {
+  height: 15px;
+  width: 15px;
+  border-style: solid;
+  border-color: rgba(109, 109, 109, 0.377);
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 2vw;
+}
+.student {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-column: 1/-1;
+  width: 100%;
+  align-items: center;
+  cursor: pointer;
+  border-bottom: solid 1px grey;
+  text-align: center;
+}
+#photo,
+#firstname,
+#middlename,
+#lastname {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 1.1rem;
+  text-align: center;
+}
+#house,
+#prefect {
+  display: none;
+}
+#House,
+#Prefect {
+  display: none;
+}
+#house,
+#prefect,
+#lastname,
+#middlename,
+#firstname,
+#photo {
+  cursor: pointer;
+}
+.student figure img {
+  grid-column: 1;
+  max-width: 100%;
+  padding: 0 1vw;
+  justify-self: center;
+}
+#firstName {
+  grid-column: 2;
+  justify-self: center;
+}
+#middleName {
+  grid-column: 3;
+  justify-self: center;
+}
+#lastName {
+  grid-column: 4;
+  justify-self: center;
+}
+tr {
+  display: grid;
+  grid-template-columns: repeat(6, 100px);
+}
+/* --------------------Burgermenu animation------------------ */
+
+.lineOne {
+  transform: rotate(45deg) translate(-3px, 10.5px);
+  transform-origin: center center;
+  transition: 0.5s;
+}
+.lineTwo {
+  transform: translateX(-50px);
+  opacity: 0;
+}
+.lineThree {
+  transform: rotate(-45deg) translate(4px, -9px);
+  transform-origin: center center;
+  transition: 0.5s;
+}
+/* vvvv-----------------  JS CLASSES -----------------------vvvv */
+
+.additionalWidth {
+  transform: translate(0, 0);
+}
+
+/* vvvv-----------------  MODAL -----------------------vvvv */
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.showModal {
+  display: block;
+}
+.close {
+  cursor: pointer;
+}
+.closeModal {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0 20px 20px 20px;
+  border: 1px solid #888;
+  width: 50vw;
+  height: 37vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 50px;
+}
+.modalinfo {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.modal-content span {
+  align-self: end;
+  padding: 0.8vw 0;
+  padding-right: 2vw;
+  font-size: 1.8rem;
+}
+.switchBox {
+  display: flex;
+}
+.switchBox p {
+  padding-right: 0.5vw;
+}
+.image {
+  height: 100%;
+}
+.personalInfo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.personalDetails,
+.additionalDetails {
+  padding: 0 3vw;
+  margin-bottom: 2vw;
+}
+.additionalDetails {
+  padding-right: 1vw;
+}
+.allInfo {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  padding: 0 3vw;
+}
+.header,
+.Addheader {
+  text-align: center;
+  border-bottom: 1px solid black;
+  margin: 0 3vw;
+  margin-bottom: 1vw;
+  font-weight: 500;
+}
+.modalinfo figure {
+  padding-bottom: 1vw;
+
+  margin-top: 2vw;
+}
+
+.modalNickname,
+.modalHouse,
+.modalFullName,
+.modalBloodStatus,
+.modalBS,
+.modalPrefect,
+.modalP,
+.modalExpelled,
+.modalE,
+.modalSquad {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.2vw;
+}
+.modalFullName p:first-child,
+.modalNickname p:first-child,
+.modalHouse p:first-child,
+.modalBloodStatus p:first-child,
+.modalPrefect p:first-child,
+.modalExpelled p:first-child,
+.modalSquad p:first-child,
+.modalNickname p:first-child {
+  color: rgba(0, 0, 0, 0.4);
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 12px;
+  width: 12px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #2196f3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(20px);
+  -ms-transform: translateX(20px);
+  transform: translateX(20px);
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+/* vvvv-----------------  MEDIA QUERIES -----------------------vvvv */
+
+@media (min-width: 600px) {
+  .mainContent {
+    grid-template-columns: repeat(6, 100px);
+  }
+  .searchbar {
+    margin: 0;
+    max-width: 600px;
+    /*     min-width: 600px;
+ */
+    margin-bottom: 8px;
+    padding-right: 2vw;
+    margin-left: 2vw;
+    justify-content: flex-end;
+  }
+
+  .searchbar input {
+    width: 300px;
+    margin-left: 10vw;
+  }
+  .searchBarBorder {
+    border-bottom: 1px solid black;
+    max-width: 600px;
+  }
+  .navborder {
+    display: none;
+  }
+  .burgericon {
+    display: none;
+  }
+  .filter {
+    width: 30vw;
+  }
+  .filterButton {
+    width: 200px;
+    border-radius: 25px;
+    border: 1px solid grey;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .FilterButtonP {
+    align-self: center;
+    width: 100%;
+    height: 100%;
+    padding-top: 1vw;
+  }
+  #house,
+  #prefect {
+    display: block;
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  #firstName {
+    grid-column: 2;
+  }
+  .student {
+    grid-template-columns: repeat(6, 100px);
+    height: 6vw;
+  }
+
+  #House,
+  #Prefect {
+    display: block;
+    justify-self: center;
+  }
+  #Prefect {
+    width: 60px;
+    border-radius: 25px;
+
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    background-color: #d2ebd3;
+    color: #6abe6e;
+  }
+  #Prefect p {
+    align-self: center;
+  }
+  .extended {
+    position: fixed;
+    margin-top: 3.5vw;
+    background-color: white;
+    height: 170px;
+    width: 250px;
+    z-index: 6s;
+    cursor: default;
+    transform: scale(0, 0);
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out;
+    border-radius: 25px;
+    border: 1px solid black;
+  }
+  .extended ul {
+    list-style-type: none;
+    margin-top: 3vw;
+    padding-left: 2vw;
+  }
+  .extended ul li {
+    display: flex;
+    padding-right: 2vw;
+    align-items: center;
+    cursor: pointer;
+  }
+  .openFilter {
+    transform: scale(1, 1);
+  }
+  .slider.round {
+    border-radius: 34px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
+  }
+}
