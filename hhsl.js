@@ -24,6 +24,11 @@ function registerButtons() {
   document.querySelectorAll("[data-action=sort]").forEach((button) => {
     button.addEventListener("click", updateSorting);
   });
+
+  document.querySelectorAll(".extended li").forEach((item) => {
+    item.addEventListener("click", updateFiltering);
+  });
+  document.querySelector("#search").addEventListener("input", searchFieldInput);
 }
 // Global variables
 const studentsProcessed = {
@@ -38,8 +43,9 @@ const studentsProcessed = {
 };
 let allStudents = [];
 let currentStudents = [];
-let sortStatus = "";
-let sortDirection = true;
+let SortValue = "";
+let sortDir = "";
+let filterValue = "";
 // Fetching data
 
 const url = "https://petlatkea.dk/2021/hogwarts/students.json";
@@ -67,13 +73,60 @@ function handleData(students) {
 
   prepareObjects();
 }
+
 function prepareObjects() {
   document.querySelector(".list tbody").innerHTML = "";
+  console.log(currentStudents);
 
-  if (sortStatus === "") {
-    allStudents.forEach(displayStudents);
+  if (filterValue === "isGryffindor") {
+    let filteredStudents = allStudents.filter(isGryffindor);
+    currentStudents = filteredStudents;
+  } else if (filterValue === "isSlytherin") {
+    let filteredStudents = allStudents.filter(isSlytherin);
+    currentStudents = filteredStudents;
+  } else if (filterValue === "isRavenclaw") {
+    let filteredStudents = allStudents.filter(isRavenclaw);
+    currentStudents = filteredStudents;
+  } else if (filterValue === "isHufflepuff") {
+    let filteredStudents = allStudents.filter(isHufflepuff);
+    currentStudents = filteredStudents;
+  } else if (filterValue === "isAll") {
+    let filteredStudents = allStudents.filter(isAll);
+    currentStudents = filteredStudents;
+  }
+
+  if (SortValue.length <= 0) {
+    if (currentStudents.length <= 0) {
+      allStudents.forEach(displayStudents);
+    } else {
+      currentStudents.forEach(displayStudents);
+    }
   } else {
     sortingStudents();
+  }
+}
+function searchFieldInput(input) {
+  console.log(input.target.value);
+  // write to the list with only those elemnts in the allAnimals array that has properties containing the search frase
+  if (!filterValue) {
+    let searchedStudents = allStudents.filter(SearchStudents);
+    currentStudents = searchedStudents;
+    prepareObjects();
+  } else {
+    let searchedStudents = currentStudents.filter(SearchStudents);
+    currentStudents = searchedStudents;
+    console.log("here we are");
+    prepareObjects();
+  }
+
+  function SearchStudents(student) {
+    // comparing in uppercase so that m is the same as M
+    return (
+      student.firstname
+        .toUpperCase()
+        .includes(input.target.value.toUpperCase()) ||
+      student.lastname.toUpperCase().includes(input.target.value.toUpperCase())
+    );
   }
 }
 function cleanUp(student) {
@@ -121,38 +174,84 @@ function cleanUp(student) {
   return studentsprocessed;
 }
 function sortingStudents() {
-  currentStudents = allStudents;
-  let sortByName = currentStudents.sort(sortFunction);
+  let direction = 1;
+
+  if (sortDir === "desc") {
+    direction = -1;
+  } else {
+    direction = 1;
+  }
+
+  if (currentStudents.length <= 0) {
+    console.log("howdy");
+
+    let sortByName = allStudents.sort(sortFunction);
+    sortByName.forEach(displayStudents);
+  } else {
+    let sortByName = currentStudents.sort(sortFunction);
+    sortByName.forEach(displayStudents);
+  }
 
   function sortFunction(a, b) {
-    if (a[sortStatus] < b[sortStatus]) {
-      return -1;
+    if (a[SortValue] < b[SortValue]) {
+      return 1 * direction;
     } else {
-      return 1;
+      return -1 * direction;
     }
   }
-  console.log(currentStudents);
-  sortByName.forEach(displayStudents);
 }
-
+function updateFiltering(event) {
+  const rawFilterValue = event.target.innerHTML;
+  const modFilterValue = rawFilterValue.substring(
+    rawFilterValue.indexOf(" ") + 1
+  );
+  filterValue = `is${modFilterValue}`;
+  prepareObjects();
+}
 function updateSorting(event) {
   const sortBy = event.target.dataset.sort;
-  if (sortBy === "firstname") {
-    sortStatus = "firstname";
-    prepareObjects(allStudents);
-  } else if (sortBy === "middlename") {
-    sortStatus = "middlename";
-    prepareObjects(allStudents);
-  } else if (sortBy === "lastname") {
-    sortStatus = "lastname";
-    prepareObjects(allStudents);
-  } else if (sortBy === "house") {
-    sortStatus = "house";
-    prepareObjects(allStudents);
-  } else if (sortBy === "prefect") {
-    sortStatus = "prefect";
-    prepareObjects(allStudents);
+  sortDir = event.target.dataset.sortDirection;
+  const SortinnerText = event.target.innerText;
+  const newSortValue = SortinnerText.charAt(0).toLowerCase();
+  SortValue = newSortValue + SortinnerText.substring(1);
+
+  if (sortDir === "asc") {
+    sortDir = event.target.dataset.sortDirection = "desc";
+  } else {
+    sortDir = event.target.dataset.sortDirection = "asc";
   }
+  prepareObjects(allStudents);
+}
+function isGryffindor(student) {
+  if (student.house === "Gryffindor") {
+    return true;
+  } else {
+    return false;
+  }
+}
+function isSlytherin(student) {
+  if (student.house === "Slytherin") {
+    return true;
+  } else {
+    return false;
+  }
+}
+function isRavenclaw(student) {
+  if (student.house === "Ravenclaw") {
+    return true;
+  } else {
+    return false;
+  }
+}
+function isHufflepuff(student) {
+  if (student.house === "Hufflepuff") {
+    return true;
+  } else {
+    return false;
+  }
+}
+function isAll() {
+  return true;
 }
 function displayStudents(allStudents) {
   /*   console.log(allStudents);
