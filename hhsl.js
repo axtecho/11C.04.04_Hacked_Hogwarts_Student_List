@@ -37,7 +37,7 @@ const studentsProcessed = {
   middlename: "",
   lastname: "",
   image: "",
-  prefect: true,
+  prefect: false,
   inqSquad: false,
   house: "",
 };
@@ -71,53 +71,54 @@ function handleData(students) {
     allStudents.push(studentInfo);
   });
 
-  prepareObjects();
+  prepareObjects(allStudents);
 }
-
-function prepareObjects() {
-  document.querySelector(".list tbody").innerHTML = "";
-  console.log(currentStudents);
-
+function hereWeFilter(reveivedStudents) {
   if (filterValue === "isGryffindor") {
-    let filteredStudents = allStudents.filter(isGryffindor);
-    currentStudents = filteredStudents;
+    let filteredStudents = reveivedStudents.filter(isGryffindor);
+    return filteredStudents;
   } else if (filterValue === "isSlytherin") {
-    let filteredStudents = allStudents.filter(isSlytherin);
-    currentStudents = filteredStudents;
+    let filteredStudents = reveivedStudents.filter(isSlytherin);
+    return filteredStudents;
   } else if (filterValue === "isRavenclaw") {
-    let filteredStudents = allStudents.filter(isRavenclaw);
-    currentStudents = filteredStudents;
+    let filteredStudents = reveivedStudents.filter(isRavenclaw);
+    return filteredStudents;
   } else if (filterValue === "isHufflepuff") {
-    let filteredStudents = allStudents.filter(isHufflepuff);
-    currentStudents = filteredStudents;
-  } else if (filterValue === "isAll") {
-    let filteredStudents = allStudents.filter(isAll);
-    currentStudents = filteredStudents;
+    let filteredStudents = reveivedStudents.filter(isHufflepuff);
+    return filteredStudents;
+  } else if (filterValue === "isAll" || filterValue === "") {
+    let filteredStudents = reveivedStudents.filter(isAll);
+    return filteredStudents;
+  }
+}
+function prepareObjects(studentArray) {
+  document.querySelector(".list tbody").innerHTML = "";
+  let treatedStudents;
+  if (!filterValue) {
+    treatedStudents = studentArray;
+  } else {
+    let filteredStudents = hereWeFilter(studentArray);
+    treatedStudents = filteredStudents;
   }
 
   if (SortValue.length <= 0) {
-    if (currentStudents.length <= 0) {
-      allStudents.forEach(displayStudents);
-    } else {
-      currentStudents.forEach(displayStudents);
-    }
+    treatedStudents.forEach(displayStudents);
+    console.log("I am calling");
   } else {
-    sortingStudents();
+    let newlySortedStudents = sortingStudents(treatedStudents);
+    treatedStudents = newlySortedStudents;
+    treatedStudents.forEach(displayStudents);
   }
+}
+
+function middleStation() {
+  displayStudents(currentStudents);
 }
 function searchFieldInput(input) {
   console.log(input.target.value);
   // write to the list with only those elemnts in the allAnimals array that has properties containing the search frase
-  if (!filterValue) {
-    let searchedStudents = allStudents.filter(SearchStudents);
-    currentStudents = searchedStudents;
-    prepareObjects();
-  } else {
-    let searchedStudents = currentStudents.filter(SearchStudents);
-    currentStudents = searchedStudents;
-    console.log("here we are");
-    prepareObjects();
-  }
+  let searchFunc = allStudents.filter(SearchStudents);
+  prepareObjects(searchFunc);
 
   function SearchStudents(student) {
     // comparing in uppercase so that m is the same as M
@@ -129,6 +130,7 @@ function searchFieldInput(input) {
     );
   }
 }
+
 function cleanUp(student) {
   /* Remove white spaces .fullname + .house from JSONdata  */
   const studentNameCleaned = student.fullname.trim();
@@ -173,7 +175,7 @@ function cleanUp(student) {
   studentsprocessed.fullname = `${studentsprocessed["firstname"]} ${studentsprocessed["lastname"]}`;
   return studentsprocessed;
 }
-function sortingStudents() {
+function sortingStudents(receivedStudents) {
   let direction = 1;
 
   if (sortDir === "desc") {
@@ -182,7 +184,10 @@ function sortingStudents() {
     direction = 1;
   }
 
-  if (currentStudents.length <= 0) {
+  let sortByName = receivedStudents.sort(sortFunction);
+  return sortByName;
+
+  /*   if (currentStudents.length <= 0) {
     console.log("howdy");
 
     let sortByName = allStudents.sort(sortFunction);
@@ -190,7 +195,7 @@ function sortingStudents() {
   } else {
     let sortByName = currentStudents.sort(sortFunction);
     sortByName.forEach(displayStudents);
-  }
+  } */
 
   function sortFunction(a, b) {
     if (a[SortValue] < b[SortValue]) {
@@ -206,7 +211,8 @@ function updateFiltering(event) {
     rawFilterValue.indexOf(" ") + 1
   );
   filterValue = `is${modFilterValue}`;
-  prepareObjects();
+  console.log(filterValue);
+  prepareObjects(allStudents);
 }
 function updateSorting(event) {
   const sortBy = event.target.dataset.sort;
@@ -220,6 +226,7 @@ function updateSorting(event) {
   } else {
     sortDir = event.target.dataset.sortDirection = "asc";
   }
+
   prepareObjects(allStudents);
 }
 function isGryffindor(student) {
@@ -253,14 +260,32 @@ function isHufflepuff(student) {
 function isAll() {
   return true;
 }
-function displayStudents(allStudents) {
-  /*   console.log(allStudents);
-   */
+function changePrefectvalue() {}
+function displayStudents(student) {
   const template = document.querySelector(".studentTemplate").content;
   const copy = template.cloneNode(true);
-  copy.querySelector("#firstName").textContent = allStudents.firstname;
-  copy.querySelector("#lastName").textContent = allStudents.lastname;
-  copy.querySelector("#House").textContent = allStudents.house;
+  copy.querySelector("#FirstName").textContent = student.firstname;
+  copy.querySelector("#LastName").textContent = student.lastname;
+  copy.querySelector("#House").textContent = student.house;
+  if (student.prefect) {
+    copy.querySelector("[data-field=Prefect]").textContent = "Yes";
+    console.log("yes prefect");
+    // WHY IS THIS CONSOLE LOGGIN 68 TIMES? AND WHY DOES THE TEXTCONTENT
+    // NOT CHANGE
+  } else {
+    copy.querySelector("[data-field=Prefect]").textContent = "No";
+    console.log(student.prefect);
+  }
+  copy.querySelector("#Prefect").addEventListener("click", prefectClicked);
+  function prefectClicked() {
+    console.log("prefectClicked");
+    if (student.prefect) {
+      student.prefect = false;
+    } else {
+      student.prefect = true;
+    }
+    /*  middleStation(); */
+  }
   /*  copy
     .querySelector("#expelled")
     .addEventListener("click", changeExpelledvalue);
