@@ -268,15 +268,18 @@ function changePrefectvalue() {}
 function displayStudents(student) {
   const template = document.querySelector(".studentTemplate").content;
   const copy = template.cloneNode(true);
-  copy.querySelector("#FirstName").textContent = student.firstname;
-  copy.querySelector("#LastName").textContent = student.lastname;
-  copy.querySelector("#House").textContent = student.house;
+  copy.querySelector("[data-field=FirstName]").textContent = student.firstname;
+  copy.querySelector("[data-field=Lastname]").textContent = student.lastname;
+  copy.querySelector("[data-field=House]").textContent = student.house;
+  // inq Squad //
   if (student.inqSquad) {
-    copy.querySelector("#Squad").textContent = "Yes";
+    copy.querySelector("[data-field=Squad]").textContent = "Yes";
   } else {
-    copy.querySelector("#Squad").textContent = "No";
+    copy.querySelector("[data-field=Squad]").textContent = "No";
   }
-  copy.querySelector("#Squad").addEventListener("click", inqSquadFunc);
+  copy
+    .querySelector("[data-field=Squad]")
+    .addEventListener("click", inqSquadFunc);
   function inqSquadFunc() {
     if (student.inqSquad) {
       console.log("im here");
@@ -290,6 +293,101 @@ function displayStudents(student) {
       prepareObjects(allStudents);
     }
   }
+
+  // Prefect
+
+  copy.querySelector("[data-field=Prefect]").dataset.isprefect =
+    student.prefect;
+  if (student.prefect) {
+    copy.querySelector("[data-field=Prefect]").textContent = "Yes";
+  } else {
+    copy.querySelector("[data-field=Prefect]").textContent = "No";
+  }
+  copy
+    .querySelector("[data-field=Prefect]")
+    .addEventListener("click", prefectFunc);
+  function prefectFunc() {
+    if (student.prefect) {
+      student.prefect = false;
+    } else {
+      tryToMakeAPrefect(student);
+    }
+    if (currentStudents.length > 0) {
+      prepareObjects(currentStudents);
+    } else {
+      prepareObjects(allStudents);
+    }
+  }
+  function tryToMakeAPrefect(selectedStudent) {
+    const prefects = allStudents.filter((student) => student.prefect);
+    const numberOfPrefects = prefects.length;
+    const others = prefects
+      .filter((student) => student.house === selectedStudent.house)
+      .shift();
+
+    // If there is another of same type
+    if (others !== undefined) {
+      console.log("there can only be one of each type!");
+      removeOther(others);
+    } else if (numberOfPrefects >= 2) {
+      console.log("there can only be two prefects!");
+      removeAorB(prefects[0], prefects[1]);
+    } else {
+      makePrefect(selectedStudent);
+    }
+    console.log(`There are ${numberOfPrefects}`);
+    // console.log(`The other prefects of this house is ${others.firstname}`);
+    console.log(others);
+
+    function removeOther(other) {
+      // ask the user to ignore or remove `other`
+      document.querySelector("#remove_other").classList.remove("hide");
+      document
+        .querySelector("#remove_other .close")
+        .addEventListener("click", closeDialog);
+      document
+        .querySelector("#remove_other #removeother")
+        .addEventListener("click", clickRemoveOther);
+
+      //if ignore do nothing
+      function closeDialog() {
+        document.querySelector("#remove_other").classList.add("hide");
+        document
+          .querySelector("#remove_other #removeother")
+          .removeEventListener("click", clickRemoveOther);
+        document
+          .querySelector("#remove_other .close")
+          .removeEventListener("click", closeDialog);
+      }
+      // if remove other:
+      function clickRemoveOther() {
+        removePrefect(other);
+        makePrefect(selectedStudent);
+        prepareObjects(allStudents);
+        closeDialog();
+      }
+    }
+    function removeAorB(prefectA, prefectB) {
+      // Ask the user to ignore or remove A or B
+
+      // if the user ignores - do nothing
+      // if removeA
+      removePrefect(prefectA);
+      makePrefect(selectedStudent);
+      //else if - if removeB
+      removePrefect(prefectB);
+      makePrefect(selectedStudent);
+    }
+    function removePrefect(givenPrefect) {
+      givenPrefect.prefect = false;
+    }
+    function makePrefect(student) {
+      student.prefect = true;
+    }
+  }
+
+  /* --------------------------------------------------- */
+  copy.querySelector("[data-field=Prefect]");
   const parent = document.querySelector(".list tbody");
   parent.appendChild(copy);
 }

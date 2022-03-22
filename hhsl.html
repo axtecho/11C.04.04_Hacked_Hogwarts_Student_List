@@ -148,17 +148,26 @@
     </div>
       <template class="studentTemplate">
         <tr class="student">
-          <td id="Photo" data-field="photo"> </td>
-          <td id="FirstName" data-field="firstName">firstname</td>
-          <td id="middleName"data-field="middleName"></td>
-          <td id="LastName"data-field="lastname">Lastname</td>
-          <td id="House" data-field="House">House</td>
-          <td id="Prefect" data-field="Prefect">No</td>
-          <td id="Squad" data-field="Squad">Nso</td>
+          <td id="Photo" data-field="Photo"> </td>
+          <td id="FirstName" data-field="FirstName">firstname</td>
+          <td id="MiddleName"data-field="MiddleName"></td>
+          <td id="LastName"data-field="Lastname">Lastname</td>
+          <td data-field="House">House</td>
+          <td data-field="Prefect" data-isprefect="false">No</td>
+          <td  data-field="Squad">Nso</td>
 
 
         </tr>
       </template>
+      <div id="remove_other" class="modaly hide">
+        <div class="dialog">
+          <button class="close">X</button>
+          <h1>Warning!</h1>
+          <p>There can only be one prefect from each house! <br>
+          Do you want to remove the other prefect? <br>
+        <button id="removeother">Remove the other</button></p>
+        </div>
+      </div>
     </main>
   </body>
   <script src="hhsl.js"></script>

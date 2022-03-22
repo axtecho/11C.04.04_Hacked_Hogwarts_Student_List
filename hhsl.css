@@ -194,6 +194,7 @@ tr {
   display: grid;
   grid-template-columns: repeat(7, 100px);
 }
+
 /* --------------------Burgermenu animation------------------ */
 
 .lineOne {
@@ -236,6 +237,11 @@ tr {
 }
 .close {
   cursor: pointer;
+  position: absolute;
+  top: 0.1rem;
+  right: 0.8rem;
+  height: 1.5rem;
+  width: 1.5rem;
 }
 .closeModal {
   color: #aaaaaa;
@@ -243,7 +249,9 @@ tr {
   font-size: 28px;
   font-weight: bold;
 }
-
+.hide {
+  visibility: hidden;
+}
 .modal-content {
   background-color: #fefefe;
   margin: auto;
@@ -416,108 +424,128 @@ input:checked + .slider:before {
   .filter {
     width: 30vw;
   }
-  .filterButton {
-    /*     width: 200px;
-    border-radius: 25px;
-    border: 1px solid grey;
-    text-align: center;
+  .modaly {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
-    cursor: pointer; */
-  }
-  #FilterButtonP {
-    width: 150px;
-    height: 25px;
-    border-radius: 25px;
-    border: 1px solid grey;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    cursor: pointer;
     align-items: center;
-    background-color: whitesmoke;
   }
-  /* .FilterButtonP {
+  .dialog {
+    box-shadow: 3px 2px 8px #eee;
+    border-radius: 12px;
+    padding: 3rem;
+    background-color: #eee;
+    position: relative;
+  }
+  .dialog button:last-of-type {
+    margin-top: 1rem;
+  }
+}
+#FilterButtonP {
+  width: 150px;
+  height: 25px;
+  border-radius: 25px;
+  border: 1px solid grey;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  align-items: center;
+  background-color: whitesmoke;
+}
+/* .FilterButtonP {
     align-self: center;
     width: 100%;
     height: 100%;
     padding-top: 1vw;
   } */
-  #house,
-  #prefect,
-  #squad {
-    display: block;
-    color: rgba(0, 0, 0, 0.5);
-    font-size: 1.1rem;
-    text-align: center;
-  }
-  #firstName {
-    grid-column: 2;
-  }
-  .student {
-    grid-template-columns: repeat(6, 100px);
-    height: 6vw;
-  }
-
-  #House,
-  #Prefect,
-  #Squad {
-    display: block;
-    justify-self: center;
-  }
-  #Squad {
-    grid-column: 7;
-  }
-  #Prefect {
-    width: 60px;
-    border-radius: 25px;
-
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    background-color: #d2ebd3;
-    color: #6abe6e;
-  }
-  #Prefect p {
-    align-self: center;
-  }
-  .extended {
-    position: fixed;
-
-    background-color: white;
-    height: auto;
-    width: 250px;
-    z-index: 6s;
-    cursor: default;
-    transform: scale(0, 0);
-    transition-duration: 0.3s;
-    transition-timing-function: ease-out;
-    transform: translate(0px, -350px);
-    border-radius: 25px;
-    border: 1px solid black;
-    padding-bottom: 3vw;
-  }
-  .extended ul {
-    list-style-type: none;
-    margin-top: 3vw;
-    padding-left: 2vw;
-  }
-  .extended ul li {
-    display: flex;
-    padding-right: 2vw;
-    align-items: center;
-    cursor: pointer;
-    margin-bottom: 5px;
-  }
-  .openFilter {
-    /* transform: scale(1, 1); */
-    transform: translate(0px, 10px);
-  }
-  .slider.round {
-    border-radius: 34px;
-  }
-
-  .slider.round:before {
-    border-radius: 50%;
-  }
+#house,
+#prefect,
+#squad {
+  display: block;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 1.1rem;
+  text-align: center;
 }
+#firstName {
+  grid-column: 2;
+}
+.student {
+  grid-template-columns: repeat(6, 100px);
+  height: 6vw;
+}
+
+td[data-field="House"],
+td[data-field="Prefect"],
+td[data-field="Squad"] {
+  display: block;
+  justify-self: center;
+}
+td[data-field="Squad"] {
+  grid-column: 7;
+}
+td[data-field="Prefect"] {
+  width: 60px;
+  border-radius: 25px;
+
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  color: #fff;
+
+  background-color: #dc4242;
+}
+td[data-field="Prefect"][data-isprefect="true"] {
+  background-color: #5bd760;
+  color: #fff;
+}
+
+td[data-field="Prefect"] p {
+  align-self: center;
+}
+.extended {
+  position: fixed;
+
+  background-color: white;
+  height: auto;
+  width: 250px;
+  z-index: 6s;
+  cursor: default;
+  transform: scale(0, 0);
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
+  transform: translate(0px, -350px);
+  border-radius: 25px;
+  border: 1px solid black;
+  padding-bottom: 3vw;
+}
+.extended ul {
+  list-style-type: none;
+  margin-top: 3vw;
+  padding-left: 2vw;
+}
+.extended ul li {
+  display: flex;
+  padding-right: 2vw;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+.openFilter {
+  /* transform: scale(1, 1); */
+  transform: translate(0px, 10px);
+}
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* -------------------- */
