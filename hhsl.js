@@ -103,7 +103,6 @@ function prepareObjects(studentArray) {
 
   if (SortValue.length <= 0) {
     treatedStudents.forEach(displayStudents);
-    console.log("I am calling");
   } else {
     let newlySortedStudents = sortingStudents(treatedStudents);
     treatedStudents = newlySortedStudents;
@@ -112,7 +111,11 @@ function prepareObjects(studentArray) {
 }
 
 function middleStation() {
-  displayStudents(currentStudents);
+  /*   if (currentStudents.length > 0) {
+    displayStudents(currentStudents);
+  } else {
+    displayStudents(allStudents);
+  } */
 }
 function searchFieldInput(input) {
   console.log(input.target.value);
@@ -261,48 +264,32 @@ function isAll() {
   return true;
 }
 function changePrefectvalue() {}
+
 function displayStudents(student) {
   const template = document.querySelector(".studentTemplate").content;
   const copy = template.cloneNode(true);
   copy.querySelector("#FirstName").textContent = student.firstname;
   copy.querySelector("#LastName").textContent = student.lastname;
   copy.querySelector("#House").textContent = student.house;
-  if (student.prefect) {
-    copy.querySelector("[data-field=Prefect]").textContent = "Yes";
-    console.log("yes prefect");
-    // WHY IS THIS CONSOLE LOGGIN 68 TIMES? AND WHY DOES THE TEXTCONTENT
-    // NOT CHANGE
+  if (student.inqSquad) {
+    copy.querySelector("#Squad").textContent = "Yes";
   } else {
-    copy.querySelector("[data-field=Prefect]").textContent = "No";
-    console.log(student.prefect);
+    copy.querySelector("#Squad").textContent = "No";
   }
-  copy.querySelector("#Prefect").addEventListener("click", prefectClicked);
-  function prefectClicked() {
-    console.log("prefectClicked");
-    if (student.prefect) {
-      student.prefect = false;
+  copy.querySelector("#Squad").addEventListener("click", inqSquadFunc);
+  function inqSquadFunc() {
+    if (student.inqSquad) {
+      console.log("im here");
+      student.inqSquad = false;
     } else {
-      student.prefect = true;
+      student.inqSquad = true;
     }
-    /*  middleStation(); */
+    if (currentStudents.length > 0) {
+      prepareObjects(currentStudents);
+    } else {
+      prepareObjects(allStudents);
+    }
   }
-  /*  copy
-    .querySelector("#expelled")
-    .addEventListener("click", changeExpelledvalue);
-  function changeExpelledvalue() {
-    const expelledButton = doccment.querySelector("#expelled").checked;
-    const modalTextP = expelledButton.parentNode.previousElementSibling;
-    if (expelledButton) {
-      modalTextP.innerText = "Yes";
-    } else {
-      modalTextP.innerText = "No";
-    }
-  } */
-  // Adding eventlisteners to each student
-  /*  const singleStudent = document.querySelectorAll(".student");
-  singleStudent.forEach((student) => {
-    student.addEventListener("click", openModal);
-  }); */
   const parent = document.querySelector(".list tbody");
   parent.appendChild(copy);
 }
@@ -328,15 +315,3 @@ function removeFilterBox() {}
 function removeModal() {
   document.querySelector(".modal").classList.remove("showModal");
 }
-
-/* function openModal() {
-  const modalFullName = this.innerText;
-  const modalSplit = modalFullName.split(`\n`);
-  console.log(modalSplit[0]);
-  document.querySelector(".modal").classList.add("showModal");
-  document.querySelector(".close").addEventListener("click", removeModal);
-  document.querySelector(
-    ".modalFN"
-  ).textContent = `${modalSplit[0]}  ${modalSplit[2]}`;
-  document.querySelector(".modalH").textContent = modalSplit[4];
-} */

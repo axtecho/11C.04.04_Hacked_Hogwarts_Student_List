@@ -146,17 +146,20 @@
 #photo,
 #firstname,
 #middlename,
-#lastname {
+#lastname,
+#squad {
   color: rgba(0, 0, 0, 0.5);
   font-size: 1.1rem;
   text-align: center;
 }
 #house,
-#prefect {
+#prefect,
+#squad {
   display: none;
 }
 #House,
-#Prefect {
+#Prefect,
+#Squad {
   display: none;
 }
 #house,
@@ -164,7 +167,8 @@
 #lastname,
 #middlename,
 #firstname,
-#photo {
+#photo,
+#squad {
   cursor: pointer;
 }
 .student figure img {
@@ -185,9 +189,10 @@
   grid-column: 4;
   justify-self: center;
 }
+
 tr {
   display: grid;
-  grid-template-columns: repeat(6, 100px);
+  grid-template-columns: repeat(7, 100px);
 }
 /* --------------------Burgermenu animation------------------ */
 
@@ -385,7 +390,7 @@ input:checked + .slider:before {
   }
   .searchbar {
     margin: 0;
-    max-width: 600px;
+    max-width: 700px;
     /*     min-width: 600px;
  */
     margin-bottom: 8px;
@@ -400,7 +405,7 @@ input:checked + .slider:before {
   }
   .searchBarBorder {
     border-bottom: 1px solid black;
-    max-width: 600px;
+    max-width: 700px;
   }
   .navborder {
     display: none;
@@ -439,7 +444,8 @@ input:checked + .slider:before {
     padding-top: 1vw;
   } */
   #house,
-  #prefect {
+  #prefect,
+  #squad {
     display: block;
     color: rgba(0, 0, 0, 0.5);
     font-size: 1.1rem;
@@ -454,9 +460,13 @@ input:checked + .slider:before {
   }
 
   #House,
-  #Prefect {
+  #Prefect,
+  #Squad {
     display: block;
     justify-self: center;
+  }
+  #Squad {
+    grid-column: 7;
   }
   #Prefect {
     width: 60px;
