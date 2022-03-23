@@ -42,7 +42,6 @@ const studentsProcessed = {
   house: "",
 };
 let allStudents = [];
-let currentStudents = [];
 let SortValue = "";
 let sortDir = "";
 let filterValue = "";
@@ -110,13 +109,6 @@ function prepareObjects(studentArray) {
   }
 }
 
-function middleStation() {
-  /*   if (currentStudents.length > 0) {
-    displayStudents(currentStudents);
-  } else {
-    displayStudents(allStudents);
-  } */
-}
 function searchFieldInput(input) {
   console.log(input.target.value);
   // write to the list with only those elemnts in the allAnimals array that has properties containing the search frase
@@ -189,16 +181,6 @@ function sortingStudents(receivedStudents) {
 
   let sortByName = receivedStudents.sort(sortFunction);
   return sortByName;
-
-  /*   if (currentStudents.length <= 0) {
-    console.log("howdy");
-
-    let sortByName = allStudents.sort(sortFunction);
-    sortByName.forEach(displayStudents);
-  } else {
-    let sortByName = currentStudents.sort(sortFunction);
-    sortByName.forEach(displayStudents);
-  } */
 
   function sortFunction(a, b) {
     if (a[SortValue] < b[SortValue]) {
@@ -287,46 +269,43 @@ function displayStudents(student) {
     } else {
       student.inqSquad = true;
     }
-    if (currentStudents.length > 0) {
-      prepareObjects(currentStudents);
-    } else {
-      prepareObjects(allStudents);
-    }
+    prepareObjects(allStudents);
   }
 
   // Prefect
 
   copy.querySelector("[data-field=Prefect]").dataset.isprefect =
     student.prefect;
+
   if (student.prefect) {
     copy.querySelector("[data-field=Prefect]").textContent = "Yes";
   } else {
     copy.querySelector("[data-field=Prefect]").textContent = "No";
   }
+
   copy
     .querySelector("[data-field=Prefect]")
     .addEventListener("click", prefectFunc);
+
   function prefectFunc() {
     if (student.prefect) {
       student.prefect = false;
     } else {
       tryToMakeAPrefect(student);
     }
-    if (currentStudents.length > 0) {
-      prepareObjects(currentStudents);
-    } else {
-      prepareObjects(allStudents);
-    }
+
+    prepareObjects(allStudents);
   }
+
   function tryToMakeAPrefect(selectedStudent) {
     const prefects = allStudents.filter((student) => student.prefect);
     const numberOfPrefects = prefects.length;
-    const others = prefects
-      .filter((student) => student.house === selectedStudent.house)
-      .shift();
-
+    const others = prefects.filter(
+      (student) => student.house === selectedStudent.house
+    );
+    console.log(others);
     // If there is another of same type
-    if (others !== undefined) {
+    if (others.length > 1) {
       console.log("there can only be one of each type!");
       removeOther(others);
     } else if (numberOfPrefects >= 2) {
@@ -335,9 +314,8 @@ function displayStudents(student) {
     } else {
       makePrefect(selectedStudent);
     }
-    console.log(`There are ${numberOfPrefects}`);
+    /*   console.log(`There are ${numberOfPrefects}`); */
     // console.log(`The other prefects of this house is ${others.firstname}`);
-    console.log(others);
 
     function removeOther(other) {
       // ask the user to ignore or remove `other`
@@ -361,7 +339,7 @@ function displayStudents(student) {
       }
       // if remove other:
       function clickRemoveOther() {
-        removePrefect(other);
+        removePrefect(other.shift());
         makePrefect(selectedStudent);
         prepareObjects(allStudents);
         closeDialog();
