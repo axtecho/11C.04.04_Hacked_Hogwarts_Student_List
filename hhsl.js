@@ -303,35 +303,39 @@ function displayStudents(student) {
     const others = prefects.filter(
       (student) => student.house === selectedStudent.house
     );
-    console.log(others);
     // If there is another of same type
     if (others.length > 1) {
       console.log("there can only be one of each type!");
       removeOther(others);
-    } else if (numberOfPrefects >= 2) {
-      console.log("there can only be two prefects!");
-      removeAorB(prefects[0], prefects[1]);
     } else {
       makePrefect(selectedStudent);
     }
+
     /*   console.log(`There are ${numberOfPrefects}`); */
     // console.log(`The other prefects of this house is ${others.firstname}`);
 
     function removeOther(other) {
       // ask the user to ignore or remove `other`
+      document.querySelector("#removefirst #first_prefect").textContent =
+        other[0].fullname;
+      document.querySelector("#removeother #second_prefect").textContent =
+        other[1].fullname;
+
       document.querySelector("#remove_other").classList.remove("hide");
       document
         .querySelector("#remove_other .close")
         .addEventListener("click", closeDialog);
-      document
-        .querySelector("#remove_other #removeother")
-        .addEventListener("click", clickRemoveOther);
+      [
+        document.querySelector("#removefirst"),
+        document.querySelector("#removeother"),
+      ].forEach((button) => {
+        button.addEventListener("click", clickRemoveOther);
+      });
 
-      //if ignore do nothing
       function closeDialog() {
         document.querySelector("#remove_other").classList.add("hide");
         document
-          .querySelector("#remove_other #removeother")
+          .querySelector("#remove_other #removefirst")
           .removeEventListener("click", clickRemoveOther);
         document
           .querySelector("#remove_other .close")
@@ -339,13 +343,21 @@ function displayStudents(student) {
       }
       // if remove other:
       function clickRemoveOther() {
-        removePrefect(other.shift());
+        const whichToRemove = this.id;
+
+        if (whichToRemove === "removefirst") {
+          console.log("Remove the first");
+          removePrefect(other[0]);
+        } else if (whichToRemove === "removeother") {
+          console.log("Remove the last");
+          removePrefect(other[1]);
+        }
         makePrefect(selectedStudent);
         prepareObjects(allStudents);
         closeDialog();
       }
     }
-    function removeAorB(prefectA, prefectB) {
+    /* function removeAorB(prefectA, prefectB) {
       // Ask the user to ignore or remove A or B
 
       // if the user ignores - do nothing
@@ -355,9 +367,10 @@ function displayStudents(student) {
       //else if - if removeB
       removePrefect(prefectB);
       makePrefect(selectedStudent);
-    }
+    } */
     function removePrefect(givenPrefect) {
       givenPrefect.prefect = false;
+      console.log(`REMOVE`);
     }
     function makePrefect(student) {
       student.prefect = true;
