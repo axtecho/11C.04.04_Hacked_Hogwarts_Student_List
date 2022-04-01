@@ -43,7 +43,7 @@ const studentsProcessed = {
 };
 let allStudents = [];
 let SortValue = "";
-let sortDir = "";
+let sortDir = "asc";
 let filterValue = "";
 // Fetching data
 
@@ -336,6 +336,9 @@ function displayStudents(student) {
         document.querySelector("#remove_other").classList.add("hide");
         document
           .querySelector("#remove_other #removefirst")
+          .removeEventListener("click", clickRemoveOther);
+        document
+          .querySelector("#remove_other #removeother")
           .removeEventListener("click", clickRemoveOther);
         document
           .querySelector("#remove_other .close")
