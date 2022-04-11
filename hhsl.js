@@ -54,21 +54,7 @@ const settings = {
 let SortValue = "";
 let sortDir = "asc";
 let filterValue = "";
-// Fetching data
 
-/* const url = "https://petlatkea.dk/2021/hogwarts/students.json";
- */
-/* fetch(url)
-  .then((response) => {
-    if (!response.ok) {
-      throw Error(response.statusText);
-    }
-    return response.json();
-  })
-
-  .then((data) => {
-    handleData(data);
-  }); */
 async function loadJSON() {
   const response = await fetch(
     "https://petlatkea.dk/2021/hogwarts/students.json"
@@ -83,9 +69,7 @@ async function loadJSON() {
   await makeFamObj(famData);
   handleData(jsonData);
 }
-/*  .catch((e) => {
-    console.error("An error occured:", e.message);
-  }); */
+
 function handleData(students) {
   students.forEach((student) => {
     let studentInfo = cleanUp(student);
@@ -151,9 +135,11 @@ function prepareObjects(studentArray) {
   let treatedStudents;
   if (!filterValue) {
     treatedStudents = studentArray;
+    updateAbout(treatedStudents);
   } else {
     let filteredStudents = hereWeFilter(studentArray);
     treatedStudents = filteredStudents;
+    updateAbout(treatedStudents);
   }
 
   if (SortValue.length <= 0) {
@@ -162,9 +148,30 @@ function prepareObjects(studentArray) {
     let newlySortedStudents = sortingStudents(treatedStudents);
     treatedStudents = newlySortedStudents;
     treatedStudents.forEach(displayStudents);
+    updateAbout(treatedStudents);
   }
 }
+function updateAbout(studentArr) {
+  const studentsOnDisplay = studentArr.length;
+  let gryffendorCount = studentArr.filter((e) => e.house === "Gryffindor");
+  let hufflepuffCount = studentArr.filter((e) => e.house === "Hufflepuff");
+  let slytherinCount = studentArr.filter((e) => e.house === "Slytherin");
+  let ravenclawCount = studentArr.filter((e) => e.house === "Ravenclaw");
 
+  console.log(gryffendorCount);
+  document.querySelector("#student_total").textContent = allStudents.length;
+  document.querySelector("#student_display").textContent = studentsOnDisplay;
+  document.querySelector("#student_expelled").textContent =
+    expelledStudents.length;
+  document.querySelector("#hufflepuff_count").textContent =
+    hufflepuffCount.length;
+  document.querySelector("#slytherin_count").textContent =
+    slytherinCount.length;
+  document.querySelector("#gryffindor_count").textContent =
+    gryffendorCount.length;
+  document.querySelector("#ravenclaw_count").textContent =
+    ravenclawCount.length;
+}
 function searchFieldInput(input) {
   console.log(input.target.value);
   // write to the list with only those elemnts in the allAnimals array that has properties containing the search frase
@@ -322,11 +329,15 @@ function isAll() {
 function changePrefectvalue() {}
 
 function displayStudents(student) {
+  let studentCount = 0;
+  studentCount += 1;
+  console.log(studentCount);
   const template = document.querySelector(".studentTemplate").content;
   const copy = template.cloneNode(true);
   copy.querySelector("[data-field=FirstName]").textContent = student.firstname;
   copy.querySelector("[data-field=Lastname]").textContent = student.lastname;
   copy.querySelector("[data-field=House]").textContent = student.house;
+
   // inq Squad //
   if (student.inqSquad) {
     copy.querySelector("[data-field=Squad]").textContent = "Yes";
@@ -455,15 +466,14 @@ function displayStudents(student) {
 
   //IMAGE
   copy.querySelector("#Photo img").src = `../assets/images/${student.imgURL}`;
-
   /* --------------------------------------------------- */
   copy.querySelector("[data-field=Prefect]");
+
   const parent = document.querySelector(".list tbody");
   parent.appendChild(copy);
 }
 // slideout menu
 const studentCard = document.querySelector(".student");
-
 function slideOutMenu() {
   /*   console.log("hello");
    */ document

@@ -223,7 +223,7 @@ tr:nth-child(odd) {
 }
 .mainContent {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 2fr 2fr 1fr;
   justify-content: center;
   grid-row: 1;
   z-index: 2;
@@ -248,12 +248,7 @@ tr:nth-child(odd) {
   align-items: center;
   background-color: whitesmoke;
 }
-/* .FilterButtonP {
-    align-self: center;
-    width: 100%;
-    height: 100%;
-    padding-top: 1vw;
-  } */
+
 #house,
 #prefect,
 #squad,
@@ -344,28 +339,43 @@ td[data-field="Prefect"] p {
 }
 /* ----------------------About list----------------------------- */
 aside {
-  height: 30vh;
-  background-color: #f1e9b9;
+  height: fit-content;
+  background-color: rgba(241, 233, 185, 0.9);
   margin: 2rem 2rem;
   padding: 1rem;
   border-radius: 24px;
+  position: sticky;
+  top: 40px;
 }
 aside h3 {
-  text-align: center;
+  padding-left: 1rem;
+}
+aside h3:last-of-type {
+  padding-top: 1.3rem;
+}
+aside > :nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  padding: 0.2rem 1rem;
+  font-style: italic;
+}
+aside > :nth-child(2) > p {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed black;
+}
+aside > div:last-of-type {
+  display: flex;
+  flex-direction: column;
+  padding: 0.2rem 1rem;
+  font-style: italic;
+}
+aside > div:last-of-type p {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed black;
 }
 
-aside > div {
-  display: grid;
-  grid-template-rows: repeat(4, 1fr);
-  grid-template-columns: repeat(3, 1fr);
-}
-
-aside > div > p:nth-child(-n + 4) {
-  grid-column: 1;
-}
-aside > div > p:nth-child(n + 5) {
-  grid-column: 2;
-}
 /* --------------------Burgermenu animation------------------ */
 
 .lineOne {
@@ -605,6 +615,7 @@ input:checked + .slider:before {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 2;
   }
   .dialog {
     box-shadow: 3px 2px 8px #eee;
