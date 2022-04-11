@@ -4,14 +4,28 @@
   box-sizing: border-box;
   font-family: roboto, "Times New Roman", Times, serif;
 }
-/* main {
-    margin: 0 4vw;
-} */
-
+#background {
+  /*  background-image: url(assets/images/background.webp);
+  background-repeat: no-repeat;
+  background-size: fill;
+  background-attachment: fixed; */
+  /*   height: 100vh;
+  width: 100%; */
+  grid-row: 1;
+  grid-column: 1/-1;
+  position: fixed;
+}
+#background img {
+  width: 100%;
+}
+main {
+  display: grid;
+  grid-template-columns: 1fr;
+}
 #headerNav {
   height: 40px;
   width: 100%;
-  display: grid;
+  display: none;
   grid-template-columns: repeat(3, 1fr);
 }
 #headerNav p {
@@ -44,6 +58,7 @@
   display: flex;
   justify-content: center;
   padding: 0 5vw;
+  grid-row: 1;
 }
 #searchicon {
   height: 100%;
@@ -96,10 +111,7 @@
   border: 0.5px solid rgba(104, 90, 90, 0.5);
   width: 100%;
 }
-.mainContent {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-}
+
 .filterList {
   width: 100%;
 }
@@ -133,16 +145,32 @@
   display: inline-block;
   margin-right: 2vw;
 }
-.student {
+
+.student,
+tr {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(7, 100px);
   grid-column: 1/-1;
   width: 100%;
   align-items: center;
   cursor: pointer;
-  border-bottom: solid 1px grey;
   text-align: center;
+  color: white;
 }
+tr img {
+  border-radius: 24px;
+  display: flex;
+}
+tr:nth-child(even) {
+  background-color: rgba(137, 137, 137, 0.4);
+  border-radius: 24px;
+  margin: 0.5rem 0;
+}
+tr:nth-child(odd) {
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 24px;
+}
+
 #photo,
 #firstname,
 #middlename,
@@ -151,6 +179,7 @@
   color: rgba(0, 0, 0, 0.5);
   font-size: 1.1rem;
   text-align: center;
+  color: wheat;
 }
 #house,
 #prefect,
@@ -168,8 +197,11 @@
 #middlename,
 #firstname,
 #photo,
-#squad {
+#squad,
+#bloodstatus {
   cursor: pointer;
+  color: wheat;
+  font-size: 1.25rem;
 }
 .student figure img {
   grid-column: 1;
@@ -189,12 +221,151 @@
   grid-column: 4;
   justify-self: center;
 }
-
-tr {
+.mainContent {
   display: grid;
-  grid-template-columns: repeat(7, 100px);
+  grid-template-columns: 1fr 2fr 1fr;
+  justify-content: center;
+  grid-row: 1;
+  z-index: 2;
+  padding: 10rem 5rem;
+  grid-column: 1/-1;
+  grid-row: 1;
 }
 
+[data-sort="middlename"],
+[data-field="MiddleName"] {
+  display: none;
+}
+#FilterButtonP {
+  width: 150px;
+  height: 25px;
+  border-radius: 25px;
+  border: 1px solid grey;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  align-items: center;
+  background-color: whitesmoke;
+}
+/* .FilterButtonP {
+    align-self: center;
+    width: 100%;
+    height: 100%;
+    padding-top: 1vw;
+  } */
+#house,
+#prefect,
+#squad,
+#bloodstatus {
+  display: block;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 1.1rem;
+  text-align: center;
+  color: wheat;
+}
+#firstName {
+  grid-column: 2;
+}
+
+td[data-field="House"],
+td[data-field="Prefect"],
+td[data-field="Squad"],
+td[data-field="Bloodstatus"] {
+  display: block;
+  justify-self: center;
+}
+td[data-field="Squad"] {
+  grid-column: 6;
+}
+td[data-field="Bloodstatus"] {
+  grid-column: 7;
+}
+td[data-field="Prefect"] {
+  width: 60px;
+  border-radius: 25px;
+
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  color: #fff;
+
+  background-color: #dc4242;
+}
+td[data-field="Prefect"][data-isprefect="true"] {
+  background-color: #5bd760;
+  color: #fff;
+}
+
+td[data-field="Prefect"] p {
+  align-self: center;
+}
+.extended {
+  position: fixed;
+
+  background-color: white;
+  height: auto;
+  width: 250px;
+  z-index: 6s;
+  cursor: default;
+  transform: scale(0, 0);
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
+  transform: translate(0px, -350px);
+  border-radius: 25px;
+  border: 1px solid black;
+  padding-bottom: 3vw;
+}
+.extended ul {
+  list-style-type: none;
+  margin-top: 3vw;
+  padding-left: 2vw;
+}
+.extended ul li {
+  display: flex;
+  padding-right: 2vw;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+.openFilter {
+  transform: translate(0px, 10px);
+}
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+.list {
+  grid-column: 2;
+  grid-row: 1;
+}
+/* ----------------------About list----------------------------- */
+aside {
+  height: 30vh;
+  background-color: #f1e9b9;
+  margin: 2rem 2rem;
+  padding: 1rem;
+  border-radius: 24px;
+}
+aside h3 {
+  text-align: center;
+}
+
+aside > div {
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+}
+
+aside > div > p:nth-child(-n + 4) {
+  grid-column: 1;
+}
+aside > div > p:nth-child(n + 5) {
+  grid-column: 2;
+}
 /* --------------------Burgermenu animation------------------ */
 
 .lineOne {
@@ -235,7 +406,8 @@ tr {
 .showModal {
   display: block;
 }
-.close {
+.close,
+.closebutton {
   cursor: pointer;
   position: absolute;
   top: 0.1rem;
@@ -393,18 +565,17 @@ input:checked + .slider:before {
 /* vvvv-----------------  MEDIA QUERIES -----------------------vvvv */
 
 @media (min-width: 600px) {
-  .mainContent {
-    grid-template-columns: repeat(6, 100px);
-  }
   .searchbar {
     margin: 0;
     max-width: 700px;
-    /*     min-width: 600px;
- */
+
     margin-bottom: 8px;
     padding-right: 2vw;
     margin-left: 2vw;
     justify-content: flex-end;
+    visibility: hidden;
+    grid-row: 1;
+    grid-column: 1/-1;
   }
 
   .searchbar input {
@@ -445,107 +616,12 @@ input:checked + .slider:before {
   .dialog button:last-of-type {
     margin-top: 1rem;
   }
-}
-#FilterButtonP {
-  width: 150px;
-  height: 25px;
-  border-radius: 25px;
-  border: 1px solid grey;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
-  align-items: center;
-  background-color: whitesmoke;
-}
-/* .FilterButtonP {
-    align-self: center;
-    width: 100%;
-    height: 100%;
-    padding-top: 1vw;
-  } */
-#house,
-#prefect,
-#squad {
-  display: block;
-  color: rgba(0, 0, 0, 0.5);
-  font-size: 1.1rem;
-  text-align: center;
-}
-#firstName {
-  grid-column: 2;
-}
-.student {
-  grid-template-columns: repeat(6, 100px);
-  height: 6vw;
-}
-
-td[data-field="House"],
-td[data-field="Prefect"],
-td[data-field="Squad"] {
-  display: block;
-  justify-self: center;
-}
-td[data-field="Squad"] {
-  grid-column: 7;
-}
-td[data-field="Prefect"] {
-  width: 60px;
-  border-radius: 25px;
-
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  color: #fff;
-
-  background-color: #dc4242;
-}
-td[data-field="Prefect"][data-isprefect="true"] {
-  background-color: #5bd760;
-  color: #fff;
-}
-
-td[data-field="Prefect"] p {
-  align-self: center;
-}
-.extended {
-  position: fixed;
-
-  background-color: white;
-  height: auto;
-  width: 250px;
-  z-index: 6s;
-  cursor: default;
-  transform: scale(0, 0);
-  transition-duration: 0.3s;
-  transition-timing-function: ease-out;
-  transform: translate(0px, -350px);
-  border-radius: 25px;
-  border: 1px solid black;
-  padding-bottom: 3vw;
-}
-.extended ul {
-  list-style-type: none;
-  margin-top: 3vw;
-  padding-left: 2vw;
-}
-.extended ul li {
-  display: flex;
-  padding-right: 2vw;
-  align-items: center;
-  cursor: pointer;
-  margin-bottom: 5px;
-}
-.openFilter {
-  /* transform: scale(1, 1); */
-  transform: translate(0px, 10px);
-}
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
+  .dialog p {
+    max-width: 450px;
+  }
+  .dialog p button {
+    padding: 0.4rem;
+  }
 }
 
 /* -------------------- */

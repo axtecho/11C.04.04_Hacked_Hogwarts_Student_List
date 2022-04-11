@@ -1,98 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="assets/harry-potter.png" />
-    <link rel="stylesheet" href="hhsl.css" />
-    <title>Hacked Hogwarts Student List</title>
-  </head>
-  <body>
-    <main>
-      <nav id="headerNav">
-        <p>11C.04.04 - Hacked Hogwarts Student List</p>
 
-        <div class="burgericon">
-          <svg id="menu-btn-svg" viewBox="0 0 100 100">
-            <rect class="one" x="35" y="35.5" width="30" height="1" />
-            <rect class="two" x="35" y="45" width="30" height="1" />
-            <rect class="three" x="35" y="55.5" width="30" height="1" />
-          </svg>
-        </div>
-        <div class="navborder"></div>
-        <nav id="slideOutMenu" class="Slide-Out-Menu">
-          <div class="filters">
-            <div class="filterMenuHeader">
-              <p>Filters</p>
-              <p>V</p>
-            </div>
-            <div class="filterBorder"></div>
-            <div class="filterList">
-              <ul>
-                <li>
-                  <p class="dot"></p>
-                  <p>House Gryffendor</p>
-                </li>
-                <li>
-                  <p class="dot"></p>
-                  <p>House Slytherin</p>
-                </li>
-                <li>
-                  <p class="dot"></p>
-                  <p>House Rawenclaw</p>
-                </li>
-                <li>
-                  <p class="dot"></p>
-                  <p>House Hufflepuff</p>
-                </li>
-                <li>
-                  <p class="dot"></p>
-                  <p>Expelled</p>
-                </li>
-                <li>
-                  <p class="dot"></p>
-                  <p>Non-expelled</p>
-                </li>
-              </ul>
-            </div>
-            <div class="sortingMenuHeader">
-              <p>Sorting</p>
-              <p>V</p>
-            </div>
-            <div class="filterBorder"></div>
-            <div class="sortingList">
-              <ul>
-                <li>
-                  <p class="dot"></p>
-                  <p>First name</p>
-                </li>
-                <li>
-                  <p class="dot"></p>
-                  <p>Last name</p>
-                </li>
-                <li>
-                  <p class="dot"></p>
-                  <p>House</p>
-                </li>
-              </ul>
-            </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="assets/harry-potter.png" />
+  <link rel="stylesheet" href="hhsl.css" />
+  <title>Hacked Hogwarts Student List</title>
+</head>
+
+<body>
+  <main>
+    <nav id="headerNav">
+
+
+      <div class="burgericon">
+        <svg id="menu-btn-svg" viewBox="0 0 100 100">
+          <rect class="one" x="35" y="35.5" width="30" height="1" />
+          <rect class="two" x="35" y="45" width="30" height="1" />
+          <rect class="three" x="35" y="55.5" width="30" height="1" />
+        </svg>
+      </div>
+      <div class="navborder"></div>
+      <nav id="slideOutMenu" class="Slide-Out-Menu">
+        <div class="filters">
+          <div class="filterMenuHeader">
+            <p>Filters</p>
+            <p>V</p>
           </div>
-        </nav>
-      </nav>
-
-      <div class="searchbar">
-        <div class="filterButton">
-          <button id="FilterButtonP">Filter</button>
-          <div class="extended">
+          <div class="filterBorder"></div>
+          <div class="filterList">
             <ul>
               <li>
                 <p class="dot"></p>
-                <p>All</p>
-              </li>
-              <li>
-                <p class="dot"></p>
-                <p>House Gryffindor</p>
+                <p>House Gryffendor</p>
               </li>
               <li>
                 <p class="dot"></p>
@@ -100,7 +42,7 @@
               </li>
               <li>
                 <p class="dot"></p>
-                <p>House Ravenclaw</p>
+                <p>House Rawenclaw</p>
               </li>
               <li>
                 <p class="dot"></p>
@@ -116,73 +58,157 @@
               </li>
             </ul>
           </div>
+          <div class="sortingMenuHeader">
+            <p>Sorting</p>
+            <p>V</p>
+          </div>
+          <div class="filterBorder"></div>
+          <div class="sortingList">
+            <ul>
+              <li>
+                <p class="dot"></p>
+                <p>First name</p>
+              </li>
+              <li>
+                <p class="dot"></p>
+                <p>Last name</p>
+              </li>
+              <li>
+                <p class="dot"></p>
+                <p>House</p>
+              </li>
+            </ul>
+          </div>
         </div>
-        <input type="text" id="search" placeholder="Search.." />
+      </nav>
+    </nav>
+
+    <div class="searchbar">
+      <div class="filterButton">
+        <button id="FilterButtonP">Filter</button>
+        <div class="extended">
+          <ul>
+            <li>
+              <p class="dot"></p>
+              <p>All</p>
+            </li>
+            <li>
+              <p class="dot"></p>
+              <p>House Gryffindor</p>
+            </li>
+            <li>
+              <p class="dot"></p>
+              <p>House Slytherin</p>
+            </li>
+            <li>
+              <p class="dot"></p>
+              <p>House Ravenclaw</p>
+            </li>
+            <li>
+              <p class="dot"></p>
+              <p>House Hufflepuff</p>
+            </li>
+            <li>
+              <p class="dot"></p>
+              <p>Expelled</p>
+            </li>
+            <li>
+              <p class="dot"></p>
+              <p>Non-expelled</p>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="searchBarBorder"></div>
-      <div class="mainContent">
-        <table class="list">   
-         <!--  <div id="photo">Photo</div>
+      <input type="text" id="search" placeholder="Search.." />
+    </div>
+    <div class="searchBarBorder"></div>
+    <div id="background"><img src="assets/images/background.webp" alt=""></div>
+    <div class="mainContent">
+      <table class="list">
+        <!--  <div id="photo">Photo</div>
           <div id="firstname">Firstname</div>
           <div id="middlename">Middlename</div>
           <div id="lastname">Lastname</div>
           <div id="house">House</div>
           <div id="prefect">Prefect</div> -->
-          <thead><tr>   
-            
+        <thead>
+          <tr>
+
             <th id="photo" data-action="sort" data-sort-direction="asc" data-sort="photo">Photo</th>
             <th id="firstname" data-action="sort" data-sort-direction="asc" data-sort="firstname">Firstname</th>
             <th id="middlename" data-action="sort" data-sort-direction="asc" data-sort="middlename">Middlename</th>
             <th id="lastname" data-action="sort" data-sort-direction="asc" data-sort="lastname">Lastname</th>
-           <th id="house" data-action="sort" data-sort-direction="asc" data-sort="house">House</th>
-           <th id="prefect" data-action="sort" data-sort-direction="asc" data-sort="prefect">Prefect</th>  
-           <th id="squad" data-action="sort" data-sort-direction="asc" data-sort="squad">Squad</th>
-        
-        </tr>
+            <th id="house" data-action="sort" data-sort-direction="asc" data-sort="house">House</th>
+            <th id="prefect" data-action="sort" data-sort-direction="asc" data-sort="prefect">Prefect</th>
+            <th id="squad" data-action="sort" data-sort-direction="asc" data-sort="squad">Squad</th>
+            <th id="bloodstatus" data-action="sort" data-sort-direction="asc" data-sort="bloodstatus">Bloodstatus</th>
+
+
+          </tr>
         </thead>
 
-       <tbody></tbody>
-        </table>
-      </div>
-      
+        <tbody></tbody>
+      </table>
+      <aside>
+        <h3>Student info</h3>
+        <div>
+       <p>Per house</p>
+       <p>Expelled</p>
+       <p>On display</p>
+       <p>In total</p>
+       
+       <p>Gryffendor</p>
+       <p>Slytherin</p>
+       <p>Ravenclaw</p>
+       <p>Hufflepuff</p>
+        </div>
+      </aside>
     </div>
-      <template class="studentTemplate">
-        <tr class="student">
-          <td id="Photo" data-field="Photo"> </td>
-          <td id="FirstName" data-field="FirstName">firstname</td>
-          <td id="MiddleName"data-field="MiddleName"></td>
-          <td id="LastName"data-field="Lastname">Lastname</td>
-          <td data-field="House">House</td>
-          <td data-field="Prefect" data-isprefect="false">No</td>
-          <td  data-field="Squad">Nso</td>
+
+    </div>
+    <template class="studentTemplate">
+      <tr class="student">
+        <td id="Photo" data-field="Photo"><img src="#" alt="#"></td>
+        <td id="FirstName" data-field="FirstName">firstname</td>
+        <td id="MiddleName" data-field="MiddleName"></td>
+        <td id="LastName" data-field="Lastname">Lastname</td>
+        <td data-field="House">House</td>
+        <td data-field="Prefect" data-isprefect="false">No</td>
+        <td data-field="Squad">Nso</td>
+        <td data-field="Bloodstatus">Muggle</td>
 
 
-        </tr>
-      </template>
-      <div id="remove_other" class="modaly hide">
-        <div class="dialog">
-          <button class="close">X</button>
-          <h1>Warning!</h1>
-          <p>There can only be one prefect from each house! <br>
+
+      </tr>
+    </template>
+    <div id="remove_other" class="modaly hide">
+      <div class="dialog">
+        <button class="close">X</button>
+        <h1>Warning!</h1>
+        <p>There can only be one prefect from each house! <br>
           Do you want to remove the one of the other prefects? <br>
-        <button id="removefirst">Remove <span id="first_prefect"></span></button>
-        <button id="removeother">Remove <span id="second_prefect"></span></button></p>
-        </div>
+          <button id="removefirst">Remove <span id="first_prefect"></span></button>
+          <button id="removeother">Remove <span id="second_prefect"></span></button></p>
       </div>
-      <div id="remove_aorb" class="modaly hide">
-        <div class="dialog">
-          <button class="close">X</button>
-          <h1>Warning!</h1>
-          <p>There can only be one prefect from each house! <br>
-          Do you want to remove the other prefect? <br>
-        <button id="removeother">Remove the other</button></p>
-        </div>
+    </div>
+    <div id="squad_dialog" class="modaly hide">
+      <div class="dialog">
+        <button class="closebutton">X</button>
+        <h1>Hey!</h1>
+        <p>Don't even think about trying to add some non-slythering, half-blood wizard type to our Inquisitorial Squad
+          <br>
+
+          <button id="wellsorry">Well sorry!</button>
+        </p>
       </div>
-    </main>
-  </body>
-  <script src="hhsl.js"></script>
+      <!-- s -->
+    </div>
+  </main>
+</body>
+<script src="hhsl.js"></script>
+
 </html>
-    <!--   <template id="animal">
+<!--   <template id="animal">
           <tr>
            
             <td data-field="firstName">☆</td>
