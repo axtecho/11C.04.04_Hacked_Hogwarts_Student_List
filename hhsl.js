@@ -21,6 +21,7 @@ function registerButtons() {
   document.querySelectorAll(".extended li").forEach((item) => {
     item.addEventListener("click", updateFiltering);
   });
+
   document.querySelector("#search").addEventListener("input", searchFieldInput);
 }
 // Global variables
@@ -79,6 +80,7 @@ function handleData(students) {
 
   prepareObjects(allStudents);
 }
+
 function hereWeFilter(reveivedStudents) {
   if (filterValue === "isGryffindor") {
     let filteredStudents = reveivedStudents.filter(isGryffindor);
@@ -105,6 +107,7 @@ async function makeFamObj(famData) {
     familiesObj.pure.push(name);
   });
 }
+
 function getBloodStatus(student) {
   const halfBloodArr = familiesObj.half;
   const pureBloodArr = familiesObj.pure;
@@ -130,10 +133,13 @@ function getBloodStatus(student) {
     }
   }
 }
+
 function prepareObjects(studentArray) {
+  console.log(filterValue);
   document.querySelector(".list tbody").innerHTML = "";
   let treatedStudents;
   if (!filterValue) {
+    console.log("no filtervalue");
     treatedStudents = studentArray;
     updateAbout(treatedStudents);
   } else {
@@ -151,14 +157,14 @@ function prepareObjects(studentArray) {
     updateAbout(treatedStudents);
   }
 }
+
 function updateAbout(studentArr) {
   const studentsOnDisplay = studentArr.length;
-  let gryffendorCount = studentArr.filter((e) => e.house === "Gryffindor");
-  let hufflepuffCount = studentArr.filter((e) => e.house === "Hufflepuff");
-  let slytherinCount = studentArr.filter((e) => e.house === "Slytherin");
-  let ravenclawCount = studentArr.filter((e) => e.house === "Ravenclaw");
+  let gryffendorCount = allStudents.filter((e) => e.house === "Gryffindor");
+  let hufflepuffCount = allStudents.filter((e) => e.house === "Hufflepuff");
+  let slytherinCount = allStudents.filter((e) => e.house === "Slytherin");
+  let ravenclawCount = allStudents.filter((e) => e.house === "Ravenclaw");
 
-  console.log(gryffendorCount);
   document.querySelector("#student_total").textContent = allStudents.length;
   document.querySelector("#student_display").textContent = studentsOnDisplay;
   document.querySelector("#student_expelled").textContent =
@@ -172,6 +178,7 @@ function updateAbout(studentArr) {
   document.querySelector("#ravenclaw_count").textContent =
     ravenclawCount.length;
 }
+
 function searchFieldInput(input) {
   console.log(input.target.value);
   // write to the list with only those elemnts in the allAnimals array that has properties containing the search frase
@@ -250,6 +257,7 @@ function cleanUp(student) {
 
   return studentsprocessed;
 }
+
 function sortingStudents(receivedStudents) {
   let direction = 1;
 
@@ -270,15 +278,12 @@ function sortingStudents(receivedStudents) {
     }
   }
 }
+
 function updateFiltering(event) {
-  const rawFilterValue = event.target.innerHTML;
-  const modFilterValue = rawFilterValue.substring(
-    rawFilterValue.indexOf(" ") + 1
-  );
-  filterValue = `is${modFilterValue}`;
-  console.log(filterValue);
+  filterValue = event.target.className;
   prepareObjects(allStudents);
 }
+
 function updateSorting(event) {
   console.log(event.target.dataset.sort);
   const sortBy = event.target.dataset.sort;
@@ -295,6 +300,7 @@ function updateSorting(event) {
   console.log;
   prepareObjects(allStudents);
 }
+
 function isGryffindor(student) {
   if (student.house === "Gryffindor") {
     return true;
@@ -302,6 +308,7 @@ function isGryffindor(student) {
     return false;
   }
 }
+
 function isSlytherin(student) {
   if (student.house === "Slytherin") {
     return true;
@@ -309,6 +316,7 @@ function isSlytherin(student) {
     return false;
   }
 }
+
 function isRavenclaw(student) {
   if (student.house === "Ravenclaw") {
     return true;
@@ -316,6 +324,7 @@ function isRavenclaw(student) {
     return false;
   }
 }
+
 function isHufflepuff(student) {
   if (student.house === "Hufflepuff") {
     return true;
@@ -323,21 +332,71 @@ function isHufflepuff(student) {
     return false;
   }
 }
+
 function isAll() {
   return true;
 }
+// IT MATTERS WHERE YOU CLICK ON A STUDENT TO OPEN THEM, NOT GOOD
 function changePrefectvalue() {}
+function openModal(event) {
+  console.log(event.target.parentElement.childNodes[1].childNodes[0]);
+  const modalFirstName = event.target.parentElement.childNodes[3].innerText;
+  const modalLastName = event.target.parentElement.childNodes[7].innerText;
+  const modalImage = event.target.parentElement.childNodes[1].childNodes[0].src;
+  document.querySelector("#student_dialog").classList.remove("hide");
+  document.querySelector("#modal_first_name").textContent = modalFirstName;
+  document.querySelector("#modal_last_name").textContent = modalLastName;
+  document.querySelector("#modalIMG").src = modalImage;
+  document
+    .querySelector("#student_dialog .close")
+    .addEventListener("click", closeModal);
+}
 
+function closeModal() {
+  document.querySelector("#student_dialog").classList.add("hide");
+}
+function expandStudent(event) {
+  const element = event.target.childNodes[17];
+  element.style.display = "inline";
+  if ((element.style.display = "inline")) {
+    event.target.addEventListener("mouseleave", () => {
+      element.style.display = "";
+    });
+  }
+}
+function upTheOpacity(event) {
+  const parentStudent = event.target.parentElement;
+
+  parentStudent.style.backgroundColor =
+    `rgba(` + 255 + `,` + 255 + `,` + 255 + `,` + 0.9 + `)`;
+  parentStudent.style.color = "#111";
+  if (
+    (parentStudent.style.backgroundColor =
+      `rgba(` + 255 + `,` + 255 + `,` + 255 + `,` + 0.9 + `)`)
+  ) {
+    event.target.addEventListener("mouseleave", () => {
+      parentStudent.style.backgroundColor =
+        `rgba(` + 255 + `,` + 255 + `,` + 255 + `,` + 0.4 + `)`;
+      parentStudent.style.color = "white";
+    });
+  }
+}
 function displayStudents(student) {
-  let studentCount = 0;
-  studentCount += 1;
-  console.log(studentCount);
   const template = document.querySelector(".studentTemplate").content;
   const copy = template.cloneNode(true);
   copy.querySelector("[data-field=FirstName]").textContent = student.firstname;
   copy.querySelector("[data-field=Lastname]").textContent = student.lastname;
   copy.querySelector("[data-field=House]").textContent = student.house;
-
+  // student modal
+  const singlecard = document.querySelectorAll(".student");
+  singlecard.forEach((card) => {
+    card.addEventListener("mouseenter", expandStudent);
+  });
+  const readMoreContainer = document.querySelectorAll("[data-field=Read_more]");
+  readMoreContainer.forEach((contain) => {
+    contain.addEventListener("mouseenter", upTheOpacity);
+    contain.addEventListener("click", openModal);
+  });
   // inq Squad //
   if (student.inqSquad) {
     copy.querySelector("[data-field=Squad]").textContent = "Yes";
@@ -365,6 +424,7 @@ function displayStudents(student) {
   copy
     .querySelector("[data-field=Squad]")
     .addEventListener("click", inqSquadFunc);
+
   function prefectFunc() {
     if (student.prefect) {
       student.prefect = false;
@@ -382,6 +442,7 @@ function displayStudents(student) {
   } else {
     copy.querySelector("[data-field=Bloodstatus]").textContent = "Muggle";
   }
+
   function tryToMakeAPrefect(selectedStudent) {
     const prefects = allStudents.filter((student) => student.prefect);
     const numberOfPrefects = prefects.length;
@@ -450,10 +511,12 @@ function displayStudents(student) {
       givenPrefect.prefect = false;
       console.log(`REMOVE`);
     }
+
     function makePrefect(student) {
       student.prefect = true;
     }
   }
+
   function inqSquadFunc() {
     if (student.inqSquad) {
       student.inqSquad = false;
@@ -474,11 +537,11 @@ function displayStudents(student) {
 }
 // slideout menu
 const studentCard = document.querySelector(".student");
+
 function slideOutMenu() {
   /*   console.log("hello");
-   */ document
-    .querySelector("#slideOutMenu")
-    .classList.toggle("additionalWidth");
+   */
+  document.querySelector("#slideOutMenu").classList.toggle("additionalWidth");
 
   document.querySelector(".one").classList.toggle("lineOne");
   document.querySelector(".two").classList.toggle("lineTwo");
@@ -487,8 +550,11 @@ function slideOutMenu() {
 // Filterlist
 function filterStatus() {
   document.querySelector(".extended").classList.toggle("openFilter");
+  document.querySelector("#background").classList.toggle("blur");
+  document.querySelector(".list").classList.toggle("blur");
+  document.querySelector("aside").classList.toggle("blur");
 }
-function removeFilterBox() {}
+
 // Modal
 function removeModal() {
   document.querySelector(".modal").classList.remove("showModal");

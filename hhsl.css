@@ -56,8 +56,6 @@ main {
   height: 30px;
   margin: 10vw 0;
   display: flex;
-  justify-content: center;
-  padding: 0 5vw;
   grid-row: 1;
 }
 #searchicon {
@@ -136,7 +134,7 @@ main {
   padding-right: 2vw;
   align-items: center;
 }
-.dot {
+#dot {
   height: 15px;
   width: 15px;
   border-style: solid;
@@ -153,7 +151,6 @@ tr {
   grid-column: 1/-1;
   width: 100%;
   align-items: center;
-  cursor: pointer;
   text-align: center;
   color: white;
 }
@@ -246,9 +243,15 @@ tr:nth-child(odd) {
   justify-content: center;
   cursor: pointer;
   align-items: center;
-  background-color: whitesmoke;
+  background-color: rgba(241, 233, 185, 0.9);
+  font-weight: 500;
+  font-size: 1.1rem;
+  font-style: italic;
 }
-
+[data-field="Prefect"],
+[data-field="Squad"] {
+  cursor: pointer;
+}
 #house,
 #prefect,
 #squad,
@@ -297,23 +300,19 @@ td[data-field="Prefect"] p {
 }
 .extended {
   position: fixed;
-
-  background-color: white;
+  background-color: rgba(241, 233, 185, 1);
   height: auto;
   width: 250px;
-  z-index: 6s;
   cursor: default;
-  transform: scale(0, 0);
   transition-duration: 0.3s;
   transition-timing-function: ease-out;
-  transform: translate(0px, -350px);
+  transform: translate(0px, -600px);
   border-radius: 25px;
   border: 1px solid black;
-  padding-bottom: 3vw;
+  padding: 2.65rem 0;
 }
 .extended ul {
   list-style-type: none;
-  margin-top: 3vw;
   padding-left: 2vw;
 }
 .extended ul li {
@@ -325,6 +324,7 @@ td[data-field="Prefect"] p {
 }
 .openFilter {
   transform: translate(0px, 10px);
+  /*  top: 40px; */
 }
 .slider.round {
   border-radius: 34px;
@@ -336,6 +336,7 @@ td[data-field="Prefect"] p {
 .list {
   grid-column: 2;
   grid-row: 1;
+  margin-top: 2rem;
 }
 /* ----------------------About list----------------------------- */
 aside {
@@ -346,6 +347,7 @@ aside {
   border-radius: 24px;
   position: sticky;
   top: 40px;
+  grid-row: 1/-1;
 }
 aside h3 {
   padding-left: 1rem;
@@ -375,7 +377,48 @@ aside > div:last-of-type p {
   justify-content: space-between;
   border-bottom: 1px dashed black;
 }
+[data-field="Read_more"] {
+  display: none;
+  grid-column: 4;
+  font-size: 1.2rem;
+  color: #a4e1ff;
+  white-space: nowrap;
+}
+[data-field="Read_more"]:hover {
+  font-size: 1.3rem;
+  color: #f50000;
+  cursor: pointer;
+}
 
+.expand_student {
+  display: inline;
+  white-space: nowrap;
+}
+#personal_details {
+  display: flex;
+}
+#personal_details div {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-left: 1rem;
+}
+#personal_details p:first-of-type {
+  font-size: 1.3rem;
+  font-weight: 300;
+  padding-bottom: 0.8rem;
+  border: none;
+}
+#personal_details p {
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+  font-weight: bold;
+  border-bottom: 1px dashed;
+}
+#personal_details span {
+  font-weight: 300;
+}
 /* --------------------Burgermenu animation------------------ */
 
 .lineOne {
@@ -396,6 +439,10 @@ aside > div:last-of-type p {
 
 .additionalWidth {
   transform: translate(0, 0);
+}
+.blur {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 /* vvvv-----------------  MODAL -----------------------vvvv */
@@ -580,17 +627,15 @@ input:checked + .slider:before {
     max-width: 700px;
 
     margin-bottom: 8px;
-    padding-right: 2vw;
-    margin-left: 2vw;
-    justify-content: flex-end;
-    visibility: hidden;
+    z-index: 2;
     grid-row: 1;
-    grid-column: 1/-1;
+    grid-column: 2;
+    justify-content: space-between;
   }
 
   .searchbar input {
     width: 300px;
-    margin-left: 10vw;
+    background-color: rgba(241, 233, 185, 0.9);
   }
   .searchBarBorder {
     border-bottom: 1px solid black;
@@ -621,8 +666,10 @@ input:checked + .slider:before {
     box-shadow: 3px 2px 8px #eee;
     border-radius: 12px;
     padding: 3rem;
-    background-color: #eee;
+    background-color: rgba(241, 233, 185, 1);
     position: relative;
+    width: 30vw;
+    height: 60vh;
   }
   .dialog button:last-of-type {
     margin-top: 1rem;

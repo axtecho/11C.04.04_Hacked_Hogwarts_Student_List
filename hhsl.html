@@ -83,54 +83,50 @@
       </nav>
     </nav>
 
-    <div class="searchbar">
-      <div class="filterButton">
-        <button id="FilterButtonP">Filter</button>
-        <div class="extended">
-          <ul>
-            <li>
-              <p class="dot"></p>
-              <p>All</p>
-            </li>
-            <li>
-              <p class="dot"></p>
-              <p>House Gryffindor</p>
-            </li>
-            <li>
-              <p class="dot"></p>
-              <p>House Slytherin</p>
-            </li>
-            <li>
-              <p class="dot"></p>
-              <p>House Ravenclaw</p>
-            </li>
-            <li>
-              <p class="dot"></p>
-              <p>House Hufflepuff</p>
-            </li>
-            <li>
-              <p class="dot"></p>
-              <p>Expelled</p>
-            </li>
-            <li>
-              <p class="dot"></p>
-              <p>Non-expelled</p>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <input type="text" id="search" placeholder="Search.." />
-    </div>
+
     <div class="searchBarBorder"></div>
     <div id="background"><img src="assets/images/background.webp" alt=""></div>
     <div class="mainContent">
+      <div class="searchbar">
+        <div class="filterButton">
+          <button id="FilterButtonP">Filter</button>
+          <div class="extended">
+            <ul>
+              <li>
+                <span class="isAll" id="dot"></span>
+                <p class="isAll">All</pc>
+              </li>
+              <li>
+                <span class="isGryffindor" id="dot"></span>
+                <p class="isGryffindor">House Gryffindor</p>
+              </li>
+              <li>
+                <span id="dot" class="isSlytherin"></span>
+                <p class="isSlytherin">House Slytherin</p>
+              </li>
+              <li>
+                <span class="isRavenclaw" id="dot"></span>
+                <p class="isRavenclaw">House Ravenclaw</p>
+              </li>
+              <li>
+                <span class="isHufflepuff" id="dot"></span>
+                <p class="isHufflepuff">House Hufflepuff</p>
+              </li>
+              <li>
+                <span class="isExpelled" id="dot"></span>
+                <p class="isExpelled">Expelled</p>
+              </li>
+              <li>
+                <span class="itNotExpelled" id="dot"></span>
+                <p class="itNotExpelled">Non-expelled</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <input type="text" id="search" placeholder="Search.." />
+      </div>
       <table class="list">
-        <!--  <div id="photo">Photo</div>
-          <div id="firstname">Firstname</div>
-          <div id="middlename">Middlename</div>
-          <div id="lastname">Lastname</div>
-          <div id="house">House</div>
-          <div id="prefect">Prefect</div> -->
+
         <thead>
           <tr>
 
@@ -151,26 +147,20 @@
       </table>
       <aside>
         <h3>Student info</h3>
-     <div>
-       <p>Expelled <span id="student_expelled">0</span></p>
-       <p>On display <span id="student_display">0</span></p>
-       <p>In total <span id="student_total"></span></p>
-     </div>
-     <h3>Students per house</h3>
-     <div>
-      <p>Hufflepuff <span id="hufflepuff_count">0</span></p>
-      <p>Slytherin <span id="slytherin_count">0</span></p>
-      <p>Gryffindor <span id="gryffindor_count">0</span></p>
-      <p>Ravenclaw <span id="ravenclaw_count">0</span></p>
+        <div>
+          <p>Expelled <span id="student_expelled">0</span></p>
+          <p>On display <span id="student_display">0</span></p>
+          <p>In total <span id="student_total"></span></p>
+        </div>
+        <h3>Students per house</h3>
+        <div>
+          <p>Hufflepuff <span id="hufflepuff_count">0</span></p>
+          <p>Slytherin <span id="slytherin_count">0</span></p>
+          <p>Gryffindor <span id="gryffindor_count">0</span></p>
+          <p>Ravenclaw <span id="ravenclaw_count">0</span></p>
 
-    </div>
-     <!--    <div>
-          <p>Pr house</p>
-          <p>Slytherin</p>
-          <p>Gryffendor</p>
-          <p>Ravenclaw</p>
-          <p>Hufflepuff</p>
-        </div> -->
+        </div>
+
       </aside>
     </div>
 
@@ -185,7 +175,7 @@
         <td data-field="Prefect" data-isprefect="false">No</td>
         <td data-field="Squad">Nso</td>
         <td data-field="Bloodstatus">Muggle</td>
-
+        <td data-field="Read_more">Read more</td>
 
 
       </tr>
@@ -204,14 +194,34 @@
       <div class="dialog">
         <button class="closebutton">X</button>
         <h1>Hey!</h1>
-        <p>Don't even think about trying to add some non-slythering, half-blood wizard type to our Inquisitorial Squad
+        <p>Don't even think about trying to add some half-blood wizard type to our Inquisitorial Squad
           <br>
 
           <button id="wellsorry">Well sorry!</button>
         </p>
       </div>
-      <!-- s -->
     </div>
+    <div id="student_dialog" class="modaly hide">
+      <div class="dialog">
+        <button class="close">X</button>
+        <div id="personal_details">
+          <figure><img id="modalIMG" src="#" alt="#"></figure>
+          <div>
+            <p>Personal information</p>
+            <p>Firstname<span id="modal_first_name">Harry</span></p>
+            <p>Middlename<span id="modal_middle_name">Pato</span></p>
+            <p>Lastname<span id="modal_last_name">Patita</span></p>
+          </div>
+          <div id="school_info">
+            <p>School pertinent information</p>
+              <p><span></span></p>
+              <p><span></span></p>
+              <p><span></span></p>
+              <p><span></span></p>
+              <p><span></span></p>
+          </div>
+        </div>
+      </div>
   </main>
 </body>
 <script src="hhsl.js"></script>
