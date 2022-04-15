@@ -21,7 +21,6 @@ function registerButtons() {
   document.querySelectorAll(".extended li").forEach((item) => {
     item.addEventListener("click", updateFiltering);
   });
-
   document.querySelector("#search").addEventListener("input", searchFieldInput);
 }
 // Global variables
@@ -336,24 +335,13 @@ function isHufflepuff(student) {
 function isAll() {
   return true;
 }
-// IT MATTERS WHERE YOU CLICK ON A STUDENT TO OPEN THEM, NOT GOOD
-function changePrefectvalue() {}
-function openModal(event) {
-  console.log(event.target.parentElement.childNodes[1].childNodes[0]);
-  const modalFirstName = event.target.parentElement.childNodes[3].innerText;
-  const modalLastName = event.target.parentElement.childNodes[7].innerText;
-  const modalImage = event.target.parentElement.childNodes[1].childNodes[0].src;
-  document.querySelector("#student_dialog").classList.remove("hide");
-  document.querySelector("#modal_first_name").textContent = modalFirstName;
-  document.querySelector("#modal_last_name").textContent = modalLastName;
-  document.querySelector("#modalIMG").src = modalImage;
-  document
-    .querySelector("#student_dialog .close")
-    .addEventListener("click", closeModal);
-}
 
-function closeModal() {
-  document.querySelector("#student_dialog").classList.add("hide");
+function changePrefectvalue() {}
+
+function closeModal(event) {
+  console.log(event.target.parentElement.parentElement);
+  const parentElement = event.target.parentElement.parentElement;
+  parentElement.classList.add("hide");
 }
 function expandStudent(event) {
   const element = event.target.childNodes[17];
@@ -381,6 +369,7 @@ function upTheOpacity(event) {
     });
   }
 }
+
 function displayStudents(student) {
   const template = document.querySelector(".studentTemplate").content;
   const copy = template.cloneNode(true);
@@ -392,12 +381,27 @@ function displayStudents(student) {
   singlecard.forEach((card) => {
     card.addEventListener("mouseenter", expandStudent);
   });
+
   const readMoreContainer = document.querySelectorAll("[data-field=Read_more]");
   readMoreContainer.forEach((contain) => {
     contain.addEventListener("mouseenter", upTheOpacity);
-    contain.addEventListener("click", openModal);
+    /* contain.addEventListener("click", openModal); */
   });
+  const closeModals = document.querySelectorAll("#student_dialog .close");
+  closeModals.forEach((modal) => {
+    modal.addEventListener("click", closeModal);
+  });
+
+  function tryToExpel() {
+    if (!student.expelled) {
+      expelEm(student);
+    }
+  }
+  //copy
+  //.querySelector("#student_dialog .close")
+  //.addEventListener("click", closeModal);
   // inq Squad //
+  copy.querySelector("[data-field=Squad]").dataset.issquad = student.inqSquad;
   if (student.inqSquad) {
     copy.querySelector("[data-field=Squad]").textContent = "Yes";
   } else {
@@ -418,9 +422,36 @@ function displayStudents(student) {
   copy
     .querySelector("[data-field=Prefect]")
     .addEventListener("click", prefectFunc);
+  // student modal
+  copy
+    .querySelector("[data-field=Read_more]")
+    .addEventListener("click", openModal);
+  function openModal(event) {
+    console.log(student.imgURL);
+    const template = document.querySelector("#dialog_template").content;
+    const copy = template.cloneNode(true);
 
+    copy.querySelector("#student_dialog").classList.remove("hide");
+    copy.querySelector("#modal_first_name").textContent = student.firstname;
+    copy.querySelector("#modal_last_name").textContent = student.lastname;
+    copy.querySelector("#modalIMG").src = `../assets/images/${student.imgURL}`;
+    copy.querySelector("#modal_house").textContent = student.house;
+    copy.querySelector("#modal_prefect").textContent = student.prefect;
+    copy.querySelector("#modal_squad").textContent = student.inqSquad;
+    copy.querySelector("#modal_blood").textContent = student.bloodstatus;
+    copy.querySelector(".close").addEventListener("click", closeModal);
+    const checked = document.querySelector("#expel").checked;
+    copy.querySelector(".modal_expel input").addEventListener("click", expelEm);
+    const parent = document.querySelector(".divbody");
+    parent.appendChild(copy);
+  }
+  function expelEm() {
+    console.log(student);
+  }
+  function openModal1() {
+    console.log(student);
+  }
   //Squad
-
   copy
     .querySelector("[data-field=Squad]")
     .addEventListener("click", inqSquadFunc);
@@ -531,6 +562,7 @@ function displayStudents(student) {
   copy.querySelector("#Photo img").src = `../assets/images/${student.imgURL}`;
   /* --------------------------------------------------- */
   copy.querySelector("[data-field=Prefect]");
+  //  const checked = document.querySelector(".modal_expel input").checked;
 
   const parent = document.querySelector(".list tbody");
   parent.appendChild(copy);

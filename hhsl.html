@@ -173,10 +173,10 @@
         <td id="LastName" data-field="Lastname">Lastname</td>
         <td data-field="House">House</td>
         <td data-field="Prefect" data-isprefect="false">No</td>
-        <td data-field="Squad">Nso</td>
+        <td data-field="Squad" data-issquad="false">Nso</td>
         <td data-field="Bloodstatus">Muggle</td>
         <td data-field="Read_more">Read more</td>
-
+        <td data-field="Expel" data-isexpelled="false">Expelled</td>
 
       </tr>
     </template>
@@ -201,6 +201,7 @@
         </p>
       </div>
     </div>
+    <template id="dialog_template">
     <div id="student_dialog" class="modaly hide">
       <div class="dialog">
         <button class="close">X</button>
@@ -212,17 +213,27 @@
             <p>Middlename<span id="modal_middle_name">Pato</span></p>
             <p>Lastname<span id="modal_last_name">Patita</span></p>
           </div>
-          <div id="school_info">
-            <p>School pertinent information</p>
-              <p><span></span></p>
-              <p><span></span></p>
-              <p><span></span></p>
-              <p><span></span></p>
-              <p><span></span></p>
-          </div>
+
+        </div>
+
+        <div id="school_info">
+          <p>School pertinent information</p>
+          <p>House<span id="modal_house"></span></p>
+          <p>Prefect status<span id="modal_prefect"></span></p>
+          <p>Inquisitorial squad<span id="modal_squad"></span></p>
+          <p>Bloodstatus<span id="modal_blood"></span></p>
+          <p>Expelled<span class="modal_expel">
+              <input type="checkbox" id="expel">
+            </span></p>
         </div>
       </div>
+    </div>
+
+  </template>
+  <div class="divbody"></div>
   </main>
+  <input type="checkbox" id="expel" name="expel" value="expel">
+
 </body>
 <script src="hhsl.js"></script>
 
