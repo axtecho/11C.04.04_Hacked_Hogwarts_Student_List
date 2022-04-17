@@ -6,15 +6,16 @@
 }
 
 #background {
-  /*  background-image: url(assets/images/background.webp);
+  background-image: url(assets/images/background.webp);
   background-repeat: no-repeat;
-  background-size: fill;
-  background-attachment: fixed; */
-  /*   height: 100vh;
-  width: 100%; */
+  background-attachment: fixed;
+  height: 100vh;
+  width: 100%;
   grid-row: 1;
   grid-column: 1/-1;
   position: fixed;
+  background-position: center;
+  background-size: cover;
 }
 
 #background img {
@@ -180,6 +181,7 @@ tr {
 tr img {
   border-radius: 24px;
   display: flex;
+  width: 100%;
 }
 
 tr:nth-child(even) {
@@ -445,10 +447,7 @@ aside > div:last-of-type p {
   color: #f50000;
   cursor: pointer;
 }
-.modal_expel input {
-  background-color: #5bd760;
-  color: #2196f3;
-}
+
 [data-field="Expel"] {
   display: none;
 }
@@ -456,9 +455,7 @@ aside > div:last-of-type p {
   display: inline;
   white-space: nowrap;
 }
-#modal_expel input:checked {
-  background-color: hotpink;
-}
+
 #personal_details {
   display: flex;
 }
@@ -488,7 +485,10 @@ aside > div:last-of-type p {
 #personal_details span {
   font-weight: 300;
 }
-
+#personal_details img {
+  border-radius: 24px;
+  display: flex;
+}
 #school_info {
   display: flex;
   flex-direction: column;
@@ -738,8 +738,104 @@ input:checked + .slider:before {
   height: 0;
 }
 
-/* vvvv-----------------  MEDIA QUERIES -----------------------vvvv */
+.dialog {
+  box-shadow: 3px 2px 8px #eee;
+  border-radius: 12px;
+  padding: 3rem;
+  background-color: rgba(241, 233, 185, 1);
+  position: relative;
+}
+.dialog_student_modal {
+  box-shadow: 3px 2px 8px #eee;
+  border-radius: 12px;
+  padding: 3rem;
+  background-color: rgba(241, 233, 185, 1);
+  position: relative;
+  width: 30vw;
+  height: 60vh;
+}
+.dialog button:last-of-type {
+  margin-top: 1rem;
+}
 
+.dialog p {
+  max-width: 450px;
+}
+
+.dialog p button {
+  padding: 0.4rem;
+}
+.modaly {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+/* vvvv-----------------  MEDIA QUERIES -----------------------vvvv */
+@media (max-width: 1010px) {
+  .mainContent {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  aside {
+    position: initial;
+  }
+  .list {
+    order: -1;
+  }
+  .extended {
+    transform: translate(0px, -1000px);
+  }
+  .searchbar {
+    margin-top: 5vh;
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 800px) {
+  .student,
+  tr {
+    display: grid;
+    grid-template-columns: repeat(7, 80px);
+  }
+  #house,
+  #prefect,
+  #lastname,
+  #middlename,
+  #firstname,
+  #photo,
+  #squad,
+  #bloodstatus {
+    cursor: pointer;
+    color: wheat;
+    font-size: 1rem;
+  }
+}
+@media (max-width: 650px) {
+  .student,
+  tr {
+    display: grid;
+    grid-template-columns: repeat(7, 70px);
+  }
+  #house,
+  #prefect,
+  #lastname,
+  #middlename,
+  #firstname,
+  #photo,
+  #squad,
+  #bloodstatus {
+    cursor: pointer;
+    color: wheat;
+    font-size: 0.8rem;
+  }
+}
 @media (min-width: 600px) {
   .searchbar {
     margin: 0;
@@ -773,41 +869,32 @@ input:checked + .slider:before {
   .filter {
     width: 30vw;
   }
-
-  .modaly {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2;
-  }
-
-  .dialog {
-    box-shadow: 3px 2px 8px #eee;
-    border-radius: 12px;
-    padding: 3rem;
-    background-color: rgba(241, 233, 185, 1);
-    position: relative;
-    width: 30vw;
-    height: 60vh;
-  }
-
-  .dialog button:last-of-type {
-    margin-top: 1rem;
-  }
-
-  .dialog p {
-    max-width: 450px;
-  }
-
-  .dialog p button {
-    padding: 0.4rem;
-  }
 }
 
+@media (max-width: 572px) {
+  /*  td[data-field="Bloodstatus"] {
+    display: none;
+  }
+  #bloodstatus {
+    display: none;
+  } */
+  .student,
+  tr {
+    display: grid;
+    grid-template-columns: repeat(7, 60px);
+  }
+  td[data-field="House"],
+  td[data-field="Prefect"],
+  td[data-field="Squad"],
+  td[data-field="Bloodstatus"],
+  td[data-field="Squad"],
+  td[data-field="Lastname"],
+  td[data-field="Squad"],
+  td[data-field="FirstName"] {
+    font-size: 0.8rem;
+  }
+  .mainContent {
+    padding: 5rem 1rem;
+  }
+}
 /* -------------------- */

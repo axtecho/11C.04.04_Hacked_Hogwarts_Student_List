@@ -85,7 +85,7 @@
 
 
     <div class="searchBarBorder"></div>
-    <div id="background"><img src="assets/images/background.webp" alt=""></div>
+    <div id="background"><!-- <img src="assets/images/background.webp" alt=""> --></div>
     <div class="mainContent">
       <div class="searchbar">
         <div class="filterButton">
@@ -116,10 +116,7 @@
                 <span class="isExpelled" id="dot"></span>
                 <p class="isExpelled">Expelled</p>
               </li>
-              <li>
-                <span class="itNotExpelled" id="dot"></span>
-                <p class="itNotExpelled">Non-expelled</p>
-              </li>
+              
             </ul>
           </div>
         </div>
@@ -180,6 +177,19 @@
 
       </tr>
     </template>
+    <template class="expelled_student_template">
+      <tr class="student">
+        <td id="Photo" data-field="Photo"><img src="#" alt="#"></td>
+        <td id="FirstName" data-field="FirstName">firstname</td>
+        <td id="MiddleName" data-field="MiddleName"></td>
+        <td id="LastName" data-field="Lastname">Lastname</td>
+        <td data-field="House">House</td>
+        <td data-field="Bloodstatus">Muggle</td>
+        <td data-field="Read_more">Read more</td>
+        <td data-field="Expel" data-isexpelled="false">Expelled</td>
+
+      </tr>
+    </template>
     <div id="remove_other" class="modaly hide">
       <div class="dialog">
         <button class="close">X</button>
@@ -203,7 +213,7 @@
     </div>
     <template id="dialog_template">
     <div id="student_dialog" class="modaly hide">
-      <div class="dialog">
+      <div class="dialog_student_modal">
         <button class="close">X</button>
         <div id="personal_details">
           <figure><img id="modalIMG" src="#" alt="#"></figure>

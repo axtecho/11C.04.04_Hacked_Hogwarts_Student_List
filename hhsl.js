@@ -71,6 +71,7 @@ async function loadJSON() {
 }
 
 function handleData(students) {
+  console.log(students);
   students.forEach((student) => {
     let studentInfo = cleanUp(student);
 
@@ -81,6 +82,7 @@ function handleData(students) {
 }
 
 function hereWeFilter(reveivedStudents) {
+  console.log(filterValue);
   if (filterValue === "isGryffindor") {
     let filteredStudents = reveivedStudents.filter(isGryffindor);
     return filteredStudents;
@@ -96,8 +98,12 @@ function hereWeFilter(reveivedStudents) {
   } else if (filterValue === "isAll" || filterValue === "") {
     let filteredStudents = reveivedStudents.filter(isAll);
     return filteredStudents;
+  } else if (filterValue === "isExpelled") {
+    prepareExpelled(expelledStudents);
   }
 }
+/* itNotExpelled; */
+
 async function makeFamObj(famData) {
   famData.half.forEach((name) => {
     familiesObj.half.push(name);
@@ -134,11 +140,10 @@ function getBloodStatus(student) {
 }
 
 function prepareObjects(studentArray) {
-  console.log(filterValue);
+  console.log(studentArray);
   document.querySelector(".list tbody").innerHTML = "";
   let treatedStudents;
   if (!filterValue) {
-    console.log("no filtervalue");
     treatedStudents = studentArray;
     updateAbout(treatedStudents);
   } else {
@@ -158,13 +163,14 @@ function prepareObjects(studentArray) {
 }
 
 function updateAbout(studentArr) {
-  const studentsOnDisplay = studentArr.length;
+  const studentsOnDisplay = allStudents.length;
   let gryffendorCount = allStudents.filter((e) => e.house === "Gryffindor");
   let hufflepuffCount = allStudents.filter((e) => e.house === "Hufflepuff");
   let slytherinCount = allStudents.filter((e) => e.house === "Slytherin");
   let ravenclawCount = allStudents.filter((e) => e.house === "Ravenclaw");
 
-  document.querySelector("#student_total").textContent = allStudents.length;
+  document.querySelector("#student_total").textContent =
+    allStudents.length + expelledStudents.length;
   document.querySelector("#student_display").textContent = studentsOnDisplay;
   document.querySelector("#student_expelled").textContent =
     expelledStudents.length;
@@ -279,12 +285,17 @@ function sortingStudents(receivedStudents) {
 }
 
 function updateFiltering(event) {
+  console.log(event.target.className);
+
   filterValue = event.target.className;
-  prepareObjects(allStudents);
+  if (filterValue === "isExpelled") {
+    prepareExpelled(expelledStudents);
+  } else {
+    prepareObjects(allStudents);
+  }
 }
 
 function updateSorting(event) {
-  console.log(event.target.dataset.sort);
   const sortBy = event.target.dataset.sort;
   sortDir = event.target.dataset.sortDirection;
   const SortinnerText = event.target.innerText;
@@ -331,7 +342,14 @@ function isHufflepuff(student) {
     return false;
   }
 }
-
+function isExpelled(student) {
+  if (student.expelled) {
+    console.log(student.expelled);
+    return true;
+  } else {
+    return false;
+  }
+}
 function isAll() {
   return true;
 }
@@ -339,7 +357,6 @@ function isAll() {
 function changePrefectvalue() {}
 
 function closeModal(event) {
-  console.log(event.target.parentElement.parentElement);
   const parentElement = event.target.parentElement.parentElement;
   parentElement.classList.add("hide");
 }
@@ -369,9 +386,64 @@ function upTheOpacity(event) {
     });
   }
 }
+/* function prepareObjects(studentArray) {
+  document.querySelector(".list tbody").innerHTML = "";
+  let treatedStudents;
+  if (!filterValue) {
+    treatedStudents = studentArray;
+    updateAbout(treatedStudents);
+  } else {
+    let filteredStudents = hereWeFilter(studentArray);
+    treatedStudents = filteredStudents;
+    updateAbout(treatedStudents);
+  }
 
+  if (SortValue.length <= 0) {
+    treatedStudents.forEach(displayStudents);
+  } else {
+    let newlySortedStudents = sortingStudents(treatedStudents);
+    treatedStudents = newlySortedStudents;
+    treatedStudents.forEach(displayStudents);
+    updateAbout(treatedStudents);
+  }
+} */
+function handleExpelledData(studentArr) {
+  console.log(studentArr);
+}
+function prepareExpelled(studentArray) {
+  document.querySelector(".list tbody").innerHTML = "";
+  console.log(studentArray);
+  if (SortValue.length <= 0) {
+    studentArray.forEach(displayExpelledStudents);
+  } else {
+    let newlySortedStudents = sortingStudents(treatedStudents);
+    treatedStudents = newlySortedStudents;
+    treatedStudents.forEach(displayExpelledStudents);
+  }
+}
+function displayExpelledStudents(student) {
+  console.log(student);
+
+  const template = document.querySelector(".expelled_student_template").content;
+  const copy = template.cloneNode(true);
+  copy.querySelector("[data-field=FirstName]").textContent = student.firstname;
+  copy.querySelector("[data-field=Lastname]").textContent = student.lastname;
+  copy.querySelector("[data-field=House]").textContent = student.house;
+  copy.querySelector("#Photo img").src = `../assets/images/${student.imgURL}`;
+
+  if (getBloodStatus(student) === "half") {
+    copy.querySelector("[data-field=Bloodstatus]").textContent = "Half-Blood";
+  } else if (getBloodStatus(student) === "full") {
+    copy.querySelector("[data-field=Bloodstatus]").textContent = "Full-Blood";
+  } else {
+    copy.querySelector("[data-field=Bloodstatus]").textContent = "Muggle";
+  }
+  const parent = document.querySelector(".list tbody");
+  parent.appendChild(copy);
+}
 function displayStudents(student) {
-  const template = document.querySelector(".studentTemplate").content;
+  /*   console.log(student);
+   */ const template = document.querySelector(".studentTemplate").content;
   const copy = template.cloneNode(true);
   copy.querySelector("[data-field=FirstName]").textContent = student.firstname;
   copy.querySelector("[data-field=Lastname]").textContent = student.lastname;
@@ -392,14 +464,6 @@ function displayStudents(student) {
     modal.addEventListener("click", closeModal);
   });
 
-  function tryToExpel() {
-    if (!student.expelled) {
-      expelEm(student);
-    }
-  }
-  //copy
-  //.querySelector("#student_dialog .close")
-  //.addEventListener("click", closeModal);
   // inq Squad //
   copy.querySelector("[data-field=Squad]").dataset.issquad = student.inqSquad;
   if (student.inqSquad) {
@@ -427,7 +491,6 @@ function displayStudents(student) {
     .querySelector("[data-field=Read_more]")
     .addEventListener("click", openModal);
   function openModal(event) {
-    console.log(student.imgURL);
     const template = document.querySelector("#dialog_template").content;
     const copy = template.cloneNode(true);
 
@@ -436,20 +499,47 @@ function displayStudents(student) {
     copy.querySelector("#modal_last_name").textContent = student.lastname;
     copy.querySelector("#modalIMG").src = `../assets/images/${student.imgURL}`;
     copy.querySelector("#modal_house").textContent = student.house;
-    copy.querySelector("#modal_prefect").textContent = student.prefect;
-    copy.querySelector("#modal_squad").textContent = student.inqSquad;
-    copy.querySelector("#modal_blood").textContent = student.bloodstatus;
+    if (student.prefect) {
+      copy.querySelector("#modal_prefect").textContent = "Yes";
+    } else {
+      copy.querySelector("#modal_prefect").textContent = "No";
+    }
+    if (student.inqSquad) {
+      copy.querySelector("#modal_squad").textContent = "Yes";
+    } else {
+      copy.querySelector("#modal_squad").textContent = "No";
+    }
+    if (student.bloodstatus === "full") {
+      copy.querySelector("#modal_blood").textContent = "Full-blood";
+    } else if (student.bloodstatus === "half") {
+      copy.querySelector("#modal_blood").textContent = "Half-blood";
+    } else {
+      copy.querySelector("#modal_blood").textContent = "Muggle";
+    }
+
+    if (student.expelled) {
+      copy.querySelector("#expel").checked = true;
+    }
     copy.querySelector(".close").addEventListener("click", closeModal);
-    const checked = document.querySelector("#expel").checked;
-    copy.querySelector(".modal_expel input").addEventListener("click", expelEm);
+    copy.querySelector("#expel").addEventListener("click", expelEm);
     const parent = document.querySelector(".divbody");
     parent.appendChild(copy);
   }
+
   function expelEm() {
-    console.log(student);
+    student.expelled = true;
+    document.querySelector("#expel").checked = true;
+    const studentIndex = allStudents.indexOf(student);
+    const newExpelledStudent = allStudents.splice(studentIndex, 1);
+    const objectsOnly = newExpelledStudent.shift();
+    expelledStudents.push(objectsOnly);
+    prepareObjects(allStudents);
+    updateAbout(allStudents);
+    closeThisModal();
   }
-  function openModal1() {
-    console.log(student);
+  function closeThisModal() {
+    console.log("hello");
+    document.querySelector("#wstudent_dialog").classList.add("hide");
   }
   //Squad
   copy
@@ -482,14 +572,10 @@ function displayStudents(student) {
     );
     // If there is another of same type
     if (others.length > 1) {
-      console.log("there can only be one of each type!");
       removeOther(others);
     } else {
       makePrefect(selectedStudent);
     }
-
-    /*   console.log(`There are ${numberOfPrefects}`); */
-    // console.log(`The other prefects of this house is ${others.firstname}`);
 
     function removeOther(other) {
       // ask the user to ignore or remove `other`
@@ -596,7 +682,6 @@ function tryToAddToSquad(selectedStudent) {
   const bloodResult = getBloodStatus(selectedStudent);
 
   if (bloodResult === "full" || selectedStudent.house === "Slytherin") {
-    console.log(selectedStudent.house);
     addToSquad(selectedStudent);
   } else {
     document.querySelector("#squad_dialog").classList.remove("hide");
@@ -625,25 +710,6 @@ function tryToAddToSquad(selectedStudent) {
   function addToSquad(selectedStudent) {
     selectedStudent.inqSquad = true;
 
-    /*  if (settings.hacked) {
-          setTimeout(removeFromSquad, 5000);
-
-          function removeFromSquad() {
-              selectedStudent.squad = false;
-              document.querySelector(
-                  "#leftsquad .squadMember"
-              ).textContent = `${selectedStudent.firstName} ${selectedStudent.lastName}`;
-              document.querySelector("#leftsquad").classList.remove("hidden");
-              document.querySelector("#leftsquad div button").addEventListener("click", closeLeftSquad);
-          }
-      }
- */
-    /*    function closeLeftSquad() {
-      document.querySelector("#leftsquad").classList.add("hidden");
-      document
-        .querySelector("#leftsquad div button")
-        .removeEventListener("click", closeLeftSquad);
-    } */
     prepareObjects(allStudents);
   }
 }
