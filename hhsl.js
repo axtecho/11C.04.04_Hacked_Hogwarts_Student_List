@@ -71,12 +71,13 @@ async function loadJSON() {
 }
 
 function handleData(students) {
+  console.log(students);
   students.forEach((student) => {
     let studentInfo = cleanUp(student);
 
     allStudents.push(studentInfo);
   });
-
+  console.log(allStudents);
   prepareObjects(allStudents);
 }
 
@@ -116,24 +117,16 @@ function getBloodStatus(student) {
   const pureBloodArr = familiesObj.pure;
   const lastname = student.lastname;
 
-  if (settings.hacked === true) {
-    const random = Math.floor(Math.random() * 3);
-
-    const bloodArr = ["half", "full", "muggle"];
-
-    return bloodArr[random];
+  if (isNameListed(halfBloodArr, lastname)) {
+    return "half";
+  } else if (isNameListed(pureBloodArr, lastname)) {
+    return "full";
   } else {
-    if (isNameListed(halfBloodArr, lastname)) {
-      return "half";
-    } else if (isNameListed(pureBloodArr, lastname)) {
-      return "full";
-    } else {
-      return "muggle";
-    }
+    return "muggle";
+  }
 
-    function isNameListed(arr, name) {
-      return arr.includes(name);
-    }
+  function isNameListed(arr, name) {
+    return arr.includes(name);
   }
 }
 
@@ -430,8 +423,8 @@ function prepareExpelled(studentArray) {
   if (SortValue.length <= 0) {
     studentArray.forEach(displayExpelledStudents);
   } else {
-    let newlySortedStudents = sortingStudents(treatedStudents);
-    treatedStudents = newlySortedStudents;
+    let newlySortedStudents = sortingStudents(studentArray);
+    let treatedStudents = newlySortedStudents;
     treatedStudents.forEach(displayExpelledStudents);
   }
 }
