@@ -187,17 +187,36 @@ function updateAbout(studentArr) {
 function searchFieldInput(input) {
   console.log(input.target.value);
   // write to the list with only those elemnts in the allAnimals array that has properties containing the search frase
-  let searchFunc = allStudents.filter(SearchStudents);
-  prepareObjects(searchFunc);
+  if (filterValue === "isExpelled") {
+    let searchFunc = expelledStudents.filter(SearchStudents);
+    prepareExpelled(searchFunc);
 
-  function SearchStudents(student) {
-    // comparing in uppercase so that m is the same as M
-    return (
-      student.firstname
-        .toUpperCase()
-        .includes(input.target.value.toUpperCase()) ||
-      student.lastname.toUpperCase().includes(input.target.value.toUpperCase())
-    );
+    function SearchStudents(student) {
+      // comparing in uppercase so that m is the same as M
+      return (
+        student.firstname
+          .toUpperCase()
+          .includes(input.target.value.toUpperCase()) ||
+        student.lastname
+          .toUpperCase()
+          .includes(input.target.value.toUpperCase())
+      );
+    }
+  } else {
+    let searchFunc = allStudents.filter(SearchStudents);
+    prepareObjects(searchFunc);
+
+    function SearchStudents(student) {
+      // comparing in uppercase so that m is the same as M
+      return (
+        student.firstname
+          .toUpperCase()
+          .includes(input.target.value.toUpperCase()) ||
+        student.lastname
+          .toUpperCase()
+          .includes(input.target.value.toUpperCase())
+      );
+    }
   }
 }
 
@@ -285,8 +304,6 @@ function sortingStudents(receivedStudents) {
 }
 
 function updateFiltering(event) {
-  console.log(event.target.className);
-
   filterValue = event.target.className;
   if (filterValue === "isExpelled") {
     prepareExpelled(expelledStudents);
@@ -357,8 +374,16 @@ function isAll() {
 function changePrefectvalue() {}
 
 function closeModal(event) {
+  console.log(event.target.parentElement.parentElement);
   const parentElement = event.target.parentElement.parentElement;
   parentElement.classList.add("hide");
+}
+function closeModalFromCheckbox(event) {
+  console.log("checkbox called");
+  const checkboxParent =
+    event.target.parentElement.parentElement.parentElement.parentElement
+      .parentElement;
+  checkboxParent.classList.add("hide");
 }
 function expandStudent(event) {
   const element = event.target.childNodes[17];
@@ -522,6 +547,10 @@ function displayStudents(student) {
     }
     copy.querySelector(".close").addEventListener("click", closeModal);
     copy.querySelector("#expel").addEventListener("click", expelEm);
+    copy
+      .querySelector(".modal_expel")
+      .addEventListener("click", closeModalFromCheckbox);
+
     const parent = document.querySelector(".divbody");
     parent.appendChild(copy);
   }
@@ -535,10 +564,8 @@ function displayStudents(student) {
     expelledStudents.push(objectsOnly);
     prepareObjects(allStudents);
     updateAbout(allStudents);
-    closeThisModal();
   }
   function closeThisModal() {
-    console.log("hello");
     document.querySelector("#wstudent_dialog").classList.add("hide");
   }
   //Squad
