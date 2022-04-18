@@ -71,7 +71,6 @@ async function loadJSON() {
 }
 
 function handleData(students) {
-  console.log(students);
   students.forEach((student) => {
     let studentInfo = cleanUp(student);
 
@@ -82,7 +81,6 @@ function handleData(students) {
 }
 
 function hereWeFilter(reveivedStudents) {
-  console.log(filterValue);
   if (filterValue === "isGryffindor") {
     let filteredStudents = reveivedStudents.filter(isGryffindor);
     return filteredStudents;
@@ -140,7 +138,6 @@ function getBloodStatus(student) {
 }
 
 function prepareObjects(studentArray) {
-  console.log(studentArray);
   document.querySelector(".list tbody").innerHTML = "";
   let treatedStudents;
   if (!filterValue) {
@@ -185,7 +182,6 @@ function updateAbout(studentArr) {
 }
 
 function searchFieldInput(input) {
-  console.log(input.target.value);
   // write to the list with only those elemnts in the allAnimals array that has properties containing the search frase
   if (filterValue === "isExpelled") {
     let searchFunc = expelledStudents.filter(SearchStudents);
@@ -324,7 +320,6 @@ function updateSorting(event) {
   } else {
     sortDir = event.target.dataset.sortDirection = "asc";
   }
-  console.log;
   prepareObjects(allStudents);
 }
 
@@ -361,7 +356,6 @@ function isHufflepuff(student) {
 }
 function isExpelled(student) {
   if (student.expelled) {
-    console.log(student.expelled);
     return true;
   } else {
     return false;
@@ -374,12 +368,10 @@ function isAll() {
 function changePrefectvalue() {}
 
 function closeModal(event) {
-  console.log(event.target.parentElement.parentElement);
   const parentElement = event.target.parentElement.parentElement;
   parentElement.classList.add("hide");
 }
 function closeModalFromCheckbox(event) {
-  console.log("checkbox called");
   const checkboxParent =
     event.target.parentElement.parentElement.parentElement.parentElement
       .parentElement;
@@ -432,12 +424,9 @@ function upTheOpacity(event) {
     updateAbout(treatedStudents);
   }
 } */
-function handleExpelledData(studentArr) {
-  console.log(studentArr);
-}
+
 function prepareExpelled(studentArray) {
   document.querySelector(".list tbody").innerHTML = "";
-  console.log(studentArray);
   if (SortValue.length <= 0) {
     studentArray.forEach(displayExpelledStudents);
   } else {
@@ -447,14 +436,12 @@ function prepareExpelled(studentArray) {
   }
 }
 function displayExpelledStudents(student) {
-  console.log(student);
-
   const template = document.querySelector(".expelled_student_template").content;
   const copy = template.cloneNode(true);
   copy.querySelector("[data-field=FirstName]").textContent = student.firstname;
   copy.querySelector("[data-field=Lastname]").textContent = student.lastname;
   copy.querySelector("[data-field=House]").textContent = student.house;
-  copy.querySelector("#Photo img").src = `../assets/images/${student.imgURL}`;
+  copy.querySelector("#Photo img").src = `assets/images/${student.imgURL}`;
 
   if (getBloodStatus(student) === "half") {
     copy.querySelector("[data-field=Bloodstatus]").textContent = "Half-Blood";
@@ -467,8 +454,7 @@ function displayExpelledStudents(student) {
   parent.appendChild(copy);
 }
 function displayStudents(student) {
-  /*   console.log(student);
-   */ const template = document.querySelector(".studentTemplate").content;
+  const template = document.querySelector(".studentTemplate").content;
   const copy = template.cloneNode(true);
   copy.querySelector("[data-field=FirstName]").textContent = student.firstname;
   copy.querySelector("[data-field=Lastname]").textContent = student.lastname;
@@ -522,7 +508,7 @@ function displayStudents(student) {
     copy.querySelector("#student_dialog").classList.remove("hide");
     copy.querySelector("#modal_first_name").textContent = student.firstname;
     copy.querySelector("#modal_last_name").textContent = student.lastname;
-    copy.querySelector("#modalIMG").src = `../assets/images/${student.imgURL}`;
+    copy.querySelector("#modalIMG").src = `assets/images/${student.imgURL}`;
     copy.querySelector("#modal_house").textContent = student.house;
     if (student.prefect) {
       copy.querySelector("#modal_prefect").textContent = "Yes";
@@ -639,10 +625,8 @@ function displayStudents(student) {
         const whichToRemove = this.id;
 
         if (whichToRemove === "removefirst") {
-          console.log("Remove the first");
           removePrefect(other[0]);
         } else if (whichToRemove === "removeother") {
-          console.log("Remove the last");
           removePrefect(other[1]);
         }
         makePrefect(selectedStudent);
@@ -653,7 +637,6 @@ function displayStudents(student) {
 
     function removePrefect(givenPrefect) {
       givenPrefect.prefect = false;
-      console.log(`REMOVE`);
     }
 
     function makePrefect(student) {
@@ -672,7 +655,7 @@ function displayStudents(student) {
   }
 
   //IMAGE
-  copy.querySelector("#Photo img").src = `../assets/images/${student.imgURL}`;
+  copy.querySelector("#Photo img").src = `assets/images/${student.imgURL}`;
   /* --------------------------------------------------- */
   copy.querySelector("[data-field=Prefect]");
   //  const checked = document.querySelector(".modal_expel input").checked;
@@ -684,8 +667,6 @@ function displayStudents(student) {
 const studentCard = document.querySelector(".student");
 
 function slideOutMenu() {
-  /*   console.log("hello");
-   */
   document.querySelector("#slideOutMenu").classList.toggle("additionalWidth");
 
   document.querySelector(".one").classList.toggle("lineOne");
